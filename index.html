@@ -200,6 +200,7 @@ body {
   color: var(--text);
   line-height: 1.7;
   max-width: 520px;
+  margin-top: 26px;
   margin-bottom: 28px;
   text-align: left;
 }
@@ -537,7 +538,10 @@ body {
   font-weight: 400;
   color: var(--text);
   line-height: 1.65;
-  margin: 0;
+  margin: 0 0 14px;
+}
+.warning p:last-child {
+  margin-bottom: 0;
 }
 
 /* ── STAT BOX ── */
@@ -1042,13 +1046,13 @@ body {
 .flip-card {
   perspective: 1200px;
   cursor: pointer;
-  min-height: 160px;
+  min-height: 200px;
 }
 .flip-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 160px;
+  min-height: 200px;
   transition: transform 0.6s cubic-bezier(0.4,0.2,0.2,1);
   transform-style: preserve-3d;
 }
@@ -1092,6 +1096,7 @@ body {
   background: rgba(143,175,194,0.16);
   border: 1px solid rgba(143,175,194,0.45);
   transform: rotateY(180deg);
+  padding: 42px 22px 22px;
 }
 .flip-back::before {
   content: "На самом деле";
@@ -1523,7 +1528,7 @@ body {
   padding: 0 24px;
 }
 .practice-card.opened .practice-body {
-  max-height: 300px;
+  max-height: 1200px;
   opacity: 1;
   padding: 0 24px 18px;
 }
@@ -1532,7 +1537,10 @@ body {
   font-weight: 400;
   color: var(--text);
   line-height: 1.6;
-  margin: 0;
+  margin: 0 0 12px;
+}
+.practice-body p:last-child {
+  margin-bottom: 0;
 }
 
 /* ── EXERCISE (упражнение с шагами) ── */
@@ -1840,6 +1848,18 @@ body {
   font-size: 10px;
   font-weight: 500;
   color: var(--blue);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.circle-label-small {
+  position: absolute;
+  top: 66%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--red);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -2829,6 +2849,40 @@ body.menu-open .toc-drawer { transform: translateX(0); }
   100% { transform: translateY(106vh) rotate(35deg); opacity: 0; }
 }
 
+/* ═══ МИКРОАНИМАЦИИ ═══ */
+@keyframes coverIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cover-title    { animation: coverIn 0.6s cubic-bezier(0.22,1,0.36,1) both; }
+.cover-subtitle { animation: coverIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.08s both; }
+.cover-desc     { animation: coverIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.16s both; }
+
+/* появление блоков при скролле */
+.reveal    { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* тактильное нажатие кнопок */
+.btn-nav:active   { transform: scale(0.97); }
+.choice-btn:active { transform: scale(0.97); }
+
+/* поднятие карточек при наведении — только на устройствах с курсором */
+@media (hover: hover) and (pointer: fine) {
+  .practice-card, .ego-card, .research-card, .exercise, .circle-def {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .practice-card:hover, .ego-card:hover, .research-card:hover, .exercise:hover, .circle-def:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(58,21,21,0.10), 0 2px 8px rgba(58,21,21,0.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover-title, .cover-subtitle, .cover-desc { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .btn-nav:active, .choice-btn:active { transform: none; }
+  .practice-card:hover, .ego-card:hover, .research-card:hover, .exercise:hover, .circle-def:hover { transform: none; box-shadow: var(--shadow-sm); }
+}
 </style>
 </head>
 <body>
@@ -2902,6 +2956,8 @@ body.menu-open .toc-drawer { transform: translateX(0); }
     <div class="cover-desc">
       Здесь нет правильных или неправильных ответов. В этом воркбуке только вы и честный разговор с собой о том, что происходит, когда вы проявляетесь на публике. Ответы видны только вам. 🔒
     </div>
+
+    <div style="max-width:520px;margin:0 auto 24px;font-family:var(--bc);text-transform:uppercase;letter-spacing:0.08em;font-size:14px;font-weight:700;color:var(--sub);text-align:left;">8 шагов · 15–20 минут · ответы видны только вам</div>
 
     <div class="cover-disclaimer">
       Воркбук предназначен для личного пользования участников курсов Дарьи Васильевой. Пожалуйста, не передавайте его третьим лицам.
@@ -3140,7 +3196,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
     </div>
 
     <div class="theory">
-      <p>И ещё одна причина страха: камера — это тоже публичное выступление. За маленькой чёрной точкой объектива стоит множество людей: подписчики, незнакомцы, все, кто может увидеть вас в интернете.</p>
+      <p>И ещё одна причина страха: <strong style="color: var(--red);">камера — это тоже публичное выступление</strong>. За маленькой чёрной точкой объектива стоит множество людей: подписчики, незнакомцы, все, кто может увидеть вас в интернете.</p>
       <p>При этом, у камеры нет обратной связи: когда мы говорим живому человеку, мозг непрерывно считывает его мимику, кивки, реакции. Камера не даёт этих сигналов, и мозг воспринимает неопределённость как угрозу, заполняя пробел худшим сценарием: «наверное, это выглядит ужасно».</p>
     </div>
 
@@ -3378,7 +3434,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
             <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="12" r="4.5" stroke="#8B2E2E" stroke-width="2.4"/><path d="M24 17v13" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/><path d="M11 23h26" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/><path d="M24 30l-6 11M24 30l6 11" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/><path d="M7 18a18 18 0 0 0 0 16M41 18a18 18 0 0 1 0 16" stroke="#8FAFC2" stroke-width="2.2" stroke-linecap="round"/></svg>
           </div>
           <div class="posture-name">Достаточный объём</div>
-          <div class="posture-desc">Вы не сжимаетесь, а спокойно занимаете своё пространство.</div>
+          <div class="posture-desc">Вы не сжимаетесь, а спокойно занимаете своё место в пространстве.</div>
         </div>
       </div>
     </div>
@@ -3392,7 +3448,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
     </div>
 
     <div class="practice-intro">
-      <div class="practice-intro-title">Что помогает прямо сейчас</div>
+      <div class="practice-intro-title">Что может помочь прямо сейчас</div>
       <p>Несколько телесных практик, которые быстро снижают напряжение. Нажмите на любую, чтобы раскрыть описание.</p>
     </div>
 
@@ -3403,7 +3459,9 @@ body.menu-open .toc-drawer { transform: translateX(0); }
           <span class="practice-arrow">▾</span>
         </div>
         <div class="practice-body">
-          <p>Потрогайте себя за плечи, обнимите ладонями предплечья, почувствуйте стопы на полу. Почувствуйте опору: на чём вы сидите, куда опираетесь спиной. Не забывайте, что вы — своя самая первая опора и можете поддержать себя собственным телом в любой ситуации. Простое самоприкосновение запускает рецепторы кожи, активирует парасимпатическую нервную систему и выделение окситоцина — уровень кортизола снижается, и тело успокаивается.</p>
+          <p>Потрогайте себя за плечи, обнимите ладонями предплечья, почувствуйте стопы на полу. Почувствуйте опору: на чём вы сидите, куда опираетесь спиной.</p>
+          <p><strong>Вы — своя самая первая опора</strong> и можете поддержать себя собственным телом в любой ситуации.</p>
+          <p>Простое самоприкосновение запускает рецепторы кожи, активирует парасимпатическую нервную систему и выделение окситоцина — <strong>уровень кортизола снижается, и тело успокаивается</strong>.</p>
         </div>
       </div>
 
@@ -3413,7 +3471,9 @@ body.menu-open .toc-drawer { transform: translateX(0); }
           <span class="practice-arrow">▾</span>
         </div>
         <div class="practice-body">
-          <p>Не фокусируйтесь на одной точке — мягко расширьте взгляд, охватывая пространство по краям. Узкое, «туннельное» зрение мозг связывает с угрозой и держит симпатическую систему включённой (выброс норадреналина). Широкое, панорамное зрение запускает обратный процесс: активируется парасимпатическая система, и общий уровень возбуждения падает.</p>
+          <p><strong>Не фокусируйтесь на одной точке</strong> — мягко расширьте взгляд, охватывая пространство по краям.</p>
+          <p>Узкое, «туннельное» зрение мозг связывает с угрозой и держит нервную систему в напряжении (выброс норадреналина).</p>
+          <p><strong>Широкое, панорамное зрение</strong> запускает обратный процесс: активируется парасимпатическая система, и общий уровень возбуждения падает.</p>
         </div>
       </div>
     </div>
@@ -3474,7 +3534,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
     <div class="step-title">Уровень эмоций</div>
 
     <div class="theory">
-      <p>На уровне эмоций со страхом публичных выступлений связаны две эмоции: страх и стыд.</p>
+      <p>На уровне эмоций со страхом публичных выступлений связаны две эмоции: <strong style="color: var(--red);">страх и стыд</strong>.</p>
       <p>Стыд — это функция социальной регуляции: он управляет нашим поведением в обществе. Когда мы испытываем стыд, психика считывает это как сигнал, что мы нарушаем некие общественные правила, а значит, рискуем быть отвергнутыми. Так стыд рождает тот самый древний страх изгнания из сообщества.</p>
     </div>
 
@@ -3531,6 +3591,20 @@ body.menu-open .toc-drawer { transform: translateX(0); }
           <span class="practice-arrow">▾</span>
         </div>
         <div class="practice-body">
+          <div style="text-align:center;margin:8px 0 18px;">
+            <svg viewBox="0 0 340 240" style="max-width:280px;width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Схема дыхания квадрат">
+              <rect x="90" y="45" width="160" height="150" rx="12" fill="rgba(139,46,46,0.05)" stroke="#8B2E2E" stroke-width="2.4"/>
+              <!-- arrowheads clockwise -->
+              <path d="M90 110 L84 121 L96 121 Z" fill="#8B2E2E"/>
+              <path d="M180 45 L169 39 L169 51 Z" fill="#8B2E2E"/>
+              <path d="M250 130 L244 119 L256 119 Z" fill="#8B2E2E"/>
+              <path d="M160 195 L171 189 L171 201 Z" fill="#8B2E2E"/>
+              <text x="170" y="30" text-anchor="middle" font-family="'Hanken Grotesk', Arial, sans-serif" font-size="14" font-weight="600" fill="#3A1515">Задержка · 4</text>
+              <text x="170" y="222" text-anchor="middle" font-family="'Hanken Grotesk', Arial, sans-serif" font-size="14" font-weight="600" fill="#3A1515">Задержка · 4</text>
+              <text x="80" y="124" text-anchor="end" font-family="'Hanken Grotesk', Arial, sans-serif" font-size="14" font-weight="700" fill="#8B2E2E">Вдох · 4</text>
+              <text x="260" y="124" text-anchor="start" font-family="'Hanken Grotesk', Arial, sans-serif" font-size="14" font-weight="700" fill="#8B2E2E">Выдох · 4</text>
+            </svg>
+          </div>
           <p>Вдох на 4 счёта — задержка на 4 — выдох на 4 — задержка на 4. Повторите 3–4 раза. Длинный выдох и паузы стимулируют блуждающий нерв и включают парасимпатическую нервную систему: пульс замедляется, уровень кортизола снижается, а тело получает сигнал, что можно успокоиться.</p>
         </div>
       </div>
@@ -3541,6 +3615,20 @@ body.menu-open .toc-drawer { transform: translateX(0); }
           <span class="practice-arrow">▾</span>
         </div>
         <div class="practice-body">
+          <div style="text-align:center;margin:8px 0 18px;">
+            <svg viewBox="0 0 260 220" style="max-width:240px;width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Короткий вдох, длинный выдох">
+              <!-- короткий вдох: короткая стрелка вверх -->
+              <line x1="80" y1="112" x2="80" y2="66" stroke="#8B2E2E" stroke-width="2.6" stroke-linecap="round"/>
+              <path d="M80 54 L73 67 L87 67 Z" fill="#8B2E2E"/>
+              <text x="80" y="134" text-anchor="middle" font-family="'Hanken Grotesk', Arial, sans-serif" font-size="15" font-weight="700" fill="#8B2E2E">Вдох</text>
+              <text x="80" y="152" text-anchor="middle" font-family="'Hanken Grotesk', Arial, sans-serif" font-size="13" fill="#7A7572">короткий</text>
+              <!-- длинный выдох: длинная стрелка вниз -->
+              <line x1="180" y1="54" x2="180" y2="158" stroke="#8B2E2E" stroke-width="2.6" stroke-linecap="round"/>
+              <path d="M180 172 L173 159 L187 159 Z" fill="#8B2E2E"/>
+              <text x="180" y="194" text-anchor="middle" font-family="'Hanken Grotesk', Arial, sans-serif" font-size="15" font-weight="700" fill="#8B2E2E">Выдох</text>
+              <text x="180" y="212" text-anchor="middle" font-family="'Hanken Grotesk', Arial, sans-serif" font-size="13" fill="#7A7572">длинный</text>
+            </svg>
+          </div>
           <p>Короткий вдох носом и длинный, медленный выдох ртом — несколько циклов. Длинный выдох активирует парасимпатическую нервную систему, которая отвечает за успокоение.</p>
         </div>
       </div>
@@ -3552,6 +3640,10 @@ body.menu-open .toc-drawer { transform: translateX(0); }
         </div>
         <div class="practice-body">
           <p>Представьте свою эмоцию как образ: какого она цвета, какого размера, где она в теле. А теперь почувствуйте, что вы намного больше неё. Эмоция — лишь маленькая часть внутри вас, а вы — то большое, что её вмещает.</p>
+          <div style="text-align:center;margin:16px 0 4px;">
+            <img src="https://i.ibb.co/JW8xmrCM/0-CBAF4-A6-657-D-4-A1-F-9-BEF-1-E268-E030970.png" alt="Пример: стыд → образ → вы больше своей эмоции" style="max-width:100%;height:auto;border-radius:12px;">
+            <div style="font-size:14px;color:var(--sub);margin-top:8px;font-style:italic;">Это лишь пример — у каждого образ свой.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -3584,8 +3676,12 @@ body.menu-open .toc-drawer { transform: translateX(0); }
       <p>Третий уровень страха — мысли. Именно здесь рождаются катастрофические сценарии: «я опозорюсь», «все увидят, что я волнуюсь», «я скажу глупость». Мысль запускает тело и эмоции, а не наоборот.</p>
     </div>
 
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/CpgHzkPG/5-B962-D2-C-E221-4203-A162-FDF16-A7536-FB.png" alt="Тревожные мысли, надумывание">
+    </div>
+
     <!-- ИНТЕРАКТИВ: о чём думаю (перенесён из Аудитории) -->
-    <div class="practice-zone">
+    <div class="practice-zone" style="margin-bottom:34px;">
       <div class="practice-q">Когда вы выступаете, о чём думаете чаще всего? Что занимает вашу голову?</div>
       <div class="choice-group">
         <button class="choice-btn" onclick="toggleChoice(this)">Как я выгляжу</button>
@@ -3596,25 +3692,6 @@ body.menu-open .toc-drawer { transform: translateX(0); }
         <button class="choice-btn" onclick="toggleChoice(this)">Что хочу донести</button>
       </div>
       <input type="text" class="field" style="margin-top:12px;" placeholder="Свой вариант...">
-    </div>
-
-    <div class="research-card">
-      <div class="research-card-head">
-        <div class="research-card-badge">🔬</div>
-        <div class="research-card-titles">
-          <div class="research-card-name">Исследование</div>
-          <div class="research-card-meta">Элисон Вуд Брукс, Гарвард, 2014</div>
-        </div>
-      </div>
-      <div class="research-card-body">
-        <p><strong>Что изучали:</strong> участникам перед публичным выступлением предлагали либо сказать себе «я спокоен», либо «я взволнован» — и сравнивали, как это влияет на качество выступления.</p>
-        <p><strong>Что нашли:</strong> те, кто говорил «я взволнован» (то есть переосмыслял тревогу как азарт и возможность, а не как угрозу), выступали значительно лучше и воспринимались наблюдателями как более убедительные, чем те, кто пытался себя успокоить.</p>
-        <p><strong>Что это значит:</strong> бороться с волнением и заставлять себя «успокоиться» — проигрышная стратегия. Тот же телесный подъём можно переименовать в азарт: «я не боюсь — я завёлся». И тогда он начинает работать на вас.</p>
-      </div>
-    </div>
-    <div class="research-source">
-      <svg class="research-source-icon" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#7A7572" stroke-width="1.3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#7A7572" stroke-width="1.3"/></svg>
-      <div class="research-source-text"><strong>Brooks, A. W.</strong> «Get Excited: Reappraising Pre-Performance Anxiety as Excitement». <em>Journal of Experimental Psychology: General</em>, 143(3), 2014, с. 1144–1158. DOI: <a href="https://doi.org/10.1037/a0035325" target="_blank">10.1037/a0035325</a></div>
     </div>
 
     <div class="research-card">
@@ -3637,7 +3714,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
     </div>
 
     <div class="highlight">
-      <p><strong>Тщательная подготовка.</strong> Значительная часть волнения связана с плохой подготовкой. Репетиции, знание материала и заранее продуманная структура речи существенно повышают уверенность. Этот метод вы будете использовать во время подготовки речей.</p>
+      <p><strong>Тщательная подготовка.</strong> Значительная часть мысленного волнения связана с плохой подготовкой. Репетиции, знание материала и заранее продуманная структура речи существенно повышают уровень вашей уверенности и спокойствия.</p>
     </div>
 
     <div class="practice-list">
@@ -3648,8 +3725,16 @@ body.menu-open .toc-drawer { transform: translateX(0); }
         </div>
         <div class="practice-body">
           <p>Доведите тревожную мысль до конца, спрашивая себя «И что?» на каждом шаге:</p>
-          <p>«А вдруг я скажу не то?» — «И что?» — «Меня осудят» — «И что?» — и так далее, пока не дойдёте до самого дна. Обычно там оказывается, что ничего непоправимого не происходит, и страх теряет силу.</p>
-          <p>Это упражнение хорошо делать письменно — или попросить близкого человека, чтобы он раз за разом задавал вам этот вопрос.</p>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin:16px 0;">
+            <div style="background:rgba(139,46,46,0.06);border:1px solid rgba(139,46,46,0.25);border-radius:10px;padding:10px 16px;font-weight:600;color:#3A1515;text-align:center;max-width:340px;">«А вдруг я скажу не то?»</div>
+            <div style="color:#8B2E2E;font-weight:700;font-size:14px;">↓ И что?</div>
+            <div style="background:rgba(139,46,46,0.06);border:1px solid rgba(139,46,46,0.25);border-radius:10px;padding:10px 16px;font-weight:600;color:#3A1515;text-align:center;max-width:340px;">«Меня осудят»</div>
+            <div style="color:#8B2E2E;font-weight:700;font-size:14px;">↓ И что?</div>
+            <div style="color:#7A7572;font-size:14px;">…и так далее, до самого дна</div>
+            <div style="color:#8B2E2E;font-weight:700;font-size:14px;">↓</div>
+            <div style="background:rgba(143,175,194,0.16);border:1px solid rgba(143,175,194,0.45);border-radius:10px;padding:10px 16px;font-weight:600;color:#3A1515;text-align:center;max-width:340px;">Ничего непоправимого не происходит</div>
+          </div>
+          <p>Обычно на самом дне оказывается, что ничего непоправимого нет, и страх теряет силу. Это упражнение хорошо делать письменно — или попросить близкого человека, чтобы он раз за разом задавал вам этот вопрос.</p>
         </div>
       </div>
     </div>
@@ -3664,7 +3749,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
         <span class="exercise-arrow">▾</span>
       </div>
       <div class="exercise-body">
-        <p class="exercise-intro">Хорошо делать накануне выступления, письменно — или вместе с близким человеком, который будет задавать вам эти вопросы. Подходит при любом страхе.</p>
+        <p class="exercise-intro">Это упражнение хорошо делать накануне выступления, можно письменно или вместе с близким человеком, который будет задавать вам эти вопросы. Подходит при любой тревоге и страхе. Я обожаю это упражнение, потому что оно быстро и реально помогает уменьшить тревогу.</p>
 
         <div class="ex-step">
           <div class="ex-num">1</div>
@@ -3750,16 +3835,6 @@ body.menu-open .toc-drawer { transform: translateX(0); }
       <p>Эрик Бёрн описал три эго-состояния личности, которые определяют, как мы думаем, чувствуем и действуем в любой ситуации.</p>
     </div>
 
-    <!-- ИЛЛЮСТРАЦИЯ К БЛОКУ -->
-    <div class="photo-filled photo-inline">
-      <img src="https://i.ibb.co/vvjR8QgR/A81-D74-FA-D37-B-4-F4-B-B36-F-1-B6-CAF35-FC0-E.png" alt="Внутренний критик">
-    </div>
-
-    <div class="research-source" style="margin-top:-12px;">
-      <svg class="research-source-icon" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#7A7572" stroke-width="1.3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#7A7572" stroke-width="1.3"/></svg>
-      <div class="research-source-text"><strong>Berne, E.</strong> <em>Transactional Analysis in Psychotherapy: A Systematic Individual and Social Psychiatry</em>. Grove Press, 1961. Модель трёх эго-состояний (Родитель–Взрослый–Ребёнок) — основа транзактного анализа, признанного терапевтического направления.</div>
-    </div>
-
     <div class="ego-grid">
       <div class="ego-card">
         <div class="ego-card-title">Ребёнок</div>
@@ -3775,14 +3850,24 @@ body.menu-open .toc-drawer { transform: translateX(0); }
       </div>
     </div>
 
+    <!-- ИЛЛЮСТРАЦИЯ К БЛОКУ -->
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/vvjR8QgR/A81-D74-FA-D37-B-4-F4-B-B36-F-1-B6-CAF35-FC0-E.png" alt="Внутренний критик">
+    </div>
+
+    <div class="research-source" style="margin-top:-12px;">
+      <svg class="research-source-icon" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#7A7572" stroke-width="1.3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#7A7572" stroke-width="1.3"/></svg>
+      <div class="research-source-text"><strong>Berne, E.</strong> <em>Transactional Analysis in Psychotherapy: A Systematic Individual and Social Psychiatry</em>. Grove Press, 1961. Модель трёх эго-состояний (Родитель–Взрослый–Ребёнок) — основа транзактного анализа, признанного терапевтического направления.</div>
+    </div>
+
     <div class="highlight">
-      <p>Мы боимся публичных выступлений не потому, что нас осудят другие люди. Чаще всего мы боимся собственного внутреннего голоса критикующего Родителя: «Я опять опозорился», «Ну что это было».</p>
+      <p>Мы боимся публичных выступлений не потому, что нас осудят другие люди. Чаще всего мы боимся собственного внутреннего голоса критикующего Родителя: «Ты опять опозорился», «Ну что ты опять сделал?».</p>
     </div>
 
     <div class="theory">
-      <p>Цель не в том, чтобы заглушить критика. Цель — вырастить поддерживающего Родителя настолько, чтобы он умел вовремя сказать критику: «Секундочку, погоди, сейчас нужно просто сделать».</p>
-      <p>А рядом с ними работает третья фигура — Взрослый. Пока критик нападает, а поддерживающий Родитель отвечает, Взрослый сверяет тревогу с реальностью: насколько вероятно то, чего я боюсь, есть ли доказательства.</p>
-      <p class="key-footnote">Эту позицию вы уже тренировали: техники «И что?» и «Декатастрофизация» из блока про мысли как раз взращивают вашего Взрослого.</p>
+      <p>Цель не в том, чтобы заглушить Критика. Цель — <strong style="color:var(--red);">вырастить поддерживающего Родителя настолько, чтобы он умел вовремя сказать Критику</strong>: «Секундочку, погоди, сейчас нужно просто сделать».</p>
+      <p>А рядом с ними работает третья фигура — <strong style="color:var(--red);">Взрослый</strong>. Пока <strong style="color:var(--red);">Критик</strong> нападает, а поддерживающий <strong style="color:var(--red);">Родитель</strong> отвечает, Взрослый сверяет тревогу с реальностью: насколько вероятно то, чего я боюсь, есть ли доказательства.</p>
+      <p class="key-footnote">Эту позицию вы уже тренировали: техники «И что?» и «Декатастрофизация» из блока про мысли как раз взращивают вашего <strong style="color:var(--red);">Взрослого</strong>.</p>
     </div>
 
     <div class="key-thought">Критик никуда не денется, но решать, чей голос громче, можете вы.</div>
@@ -3807,8 +3892,8 @@ body.menu-open .toc-drawer { transform: translateX(0); }
             <span class="voice-branch-plus"></span>
           </div>
           <div class="voice-branch-body">
-            <div class="voice-tag voice-tag-critic">Голос внутреннего критика</div>
-            <p>Один промах превращается в приговор всей личности. Был факт — «выступил не так, как хотел», а стал ярлык на всего себя.</p>
+            <div class="voice-tag voice-tag-critic">Голос внутреннего Критика</div>
+            <p>Был факт — «выступил не так, как хотел», но внутренний Критик навешивает ярлык на всего себя.</p>
           </div>
         </div>
         <div class="voice-branch adult" onclick="this.classList.toggle('opened')">
@@ -3818,7 +3903,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
           </div>
           <div class="voice-branch-body">
             <div class="voice-tag voice-tag-adult">Голос Взрослого и поддерживающего Родителя</div>
-            <p>Не было времени, не успел подготовиться — конкретная причина, а не клеймо. И при этом было ещё много хорошего. Такой голос видит реальность целиком и оставляет место, чтобы стать лучше. А ещё, как самый добрый друг, поддержит тебя в любой ситуации.</p>
+            <p>Не было времени, не успел подготовиться — конкретная причина, а не клеймо. И при этом, было ещё много хорошего. Такой голос говорит: «Ты молодец, что это сделал. У тебя были интересные слова-обороты. Ты держался достаточно уверенно».</p>
           </div>
         </div>
       </div>
@@ -3826,7 +3911,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
 
     <!-- PRACTICE ZONE -->
     <div class="practice-zone">
-      <div class="practice-q">Что говорит ваш внутренний критик после неудачного выступления? Напишите его фразу — дословно, как он звучит внутри.</div>
+      <div class="practice-q">Что говорит ваш внутренний Критик перед выступлением или записью себя на видео? Напишите его фразу — дословно, как он звучит внутри.</div>
       <input type="text" class="field" placeholder="«...»">
       <div class="practice-q" style="margin-top:12px;">А что мог бы сказать поддерживающий Родитель в ответ? Придумайте его реплику.</div>
       <input type="text" class="field" placeholder="«...»">
@@ -3866,7 +3951,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
     </div>
 
     <div class="theory">
-      <p>Вряд ли. Именно это заметил Константин Станиславский, когда создавал свою актёрскую систему: как только внимание актёра уходит в зал, игра теряет жизнь. И предложил решение — круги внимания. Смысл в том, чтобы дать вниманию ясный объект и сознательно управлять его шириной.</p>
+      <p>Вряд ли. Именно это заметил Константин Станиславский, когда создавал свою актёрскую систему: как только внимание актёра уходит в зал, игра теряет жизнь. Он предложил решение — круги внимания. Смысл в том, чтобы дать вниманию ясный объект и сознательно управлять его шириной.</p>
     </div>
 
     <!-- Circles visualization -->
@@ -3879,6 +3964,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
         </div>
         <div class="circle-label-large">Большой</div>
         <div class="circle-label-medium">Средний</div>
+        <div class="circle-label-small">Малый</div>
       </div>
     </div>
 
@@ -3991,7 +4077,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
           <button class="cq-btn" data-val="large" onclick="answerCircle(this,'small')"><span class="cq-ring large"><span></span></span>Большой</button>
         </div>
         <div class="cq-verdict"></div>
-        <div class="cq-explain"><strong>Малый круг.</strong> Когда сбивает аудитория, уйдите к себе — к дыханию, к заметкам, к своей мысли. Лица зала перестают вас вести.</div>
+        <div class="cq-explain"><strong>Малый круг.</strong> Когда сбивает аудитория, уйдите к себе: к дыханию, к заметкам, к своей мысли. Лица зала перестают вас вести.</div>
       </div>
 
       <div class="cq-item">
@@ -4054,7 +4140,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
 
       <div class="finish-title">Это только начало</div>
       <div class="finish-sub">
-        Вы сделали ещё один шаг навстречу себе — к спокойствию и уверенности в любой ситуации, в том числе перед публикой и камерой.<br><br>
+        Вы сделали ещё один шаг навстречу себе — к спокойствию и уверенности в любой ситуации, в том числе, перед публикой и камерой.<br><br>
         А дальше всё решает практика. Чем чаще вы выходите выступать и записывать себя, тем крепче ваш навык уверенности.
       </div>
 
@@ -4064,7 +4150,7 @@ body.menu-open .toc-drawer { transform: translateX(0); }
     <div class="nav-bottom">
       <button class="btn-nav btn-prev" onclick="goPrev()">← Назад</button>
       <span class="step-counter"></span>
-      <button class="btn-nav btn-next" onclick="scrollTo(0,0)" style="background:var(--dark);">В начало</button>
+      <button class="btn-nav btn-next" onclick="goToStep(0);window.scrollTo(0,0);" style="background:var(--dark);">В начало</button>
     </div>
   </div>
 
@@ -4138,6 +4224,7 @@ function updateUI() {
     it.classList.toggle('active', i === current);
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.kickReveal) requestAnimationFrame(window.kickReveal);
 }
 
 function toggleMenu(force) {
@@ -4222,6 +4309,67 @@ function toggleChoice(btn) {
 }
 
 updateUI();
+
+// ── Сохранение ответов и выбора в браузере (localStorage) ──
+(function () {
+  var KEY = 'workbook_strah_v1';
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } }
+  function save(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} }
+  var data = load();
+
+  // текстовые поля
+  document.querySelectorAll('.field').forEach(function (f, i) {
+    var k = 'f' + i;
+    if (data[k] != null) f.value = data[k];
+    f.addEventListener('input', function () { data[k] = f.value; save(data); });
+  });
+
+  // кнопки выбора
+  document.querySelectorAll('.choice-btn').forEach(function (b, i) {
+    var k = 'c' + i;
+    if (data[k]) b.classList.add('selected');
+    b.addEventListener('click', function () { data[k] = b.classList.contains('selected'); save(data); });
+  });
+})();
+
+// ── Запасной вариант, если картинка не загрузилась ──
+document.querySelectorAll('img[src*="i.ibb.co"]').forEach(function (img) {
+  img.addEventListener('error', function () {
+    var d = document.createElement('div');
+    d.textContent = img.alt || 'Изображение';
+    d.style.cssText = 'padding:28px 18px;text-align:center;color:#7A7572;background:#FAF7F4;border:1px dashed #DDD4C7;border-radius:12px;font-size:14px;';
+    if (img.parentNode) img.parentNode.replaceChild(d, img);
+  });
+});
+
+// ── Появление блоков при скролле (IntersectionObserver) ──
+if ('IntersectionObserver' in window) {
+  var revObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); revObserver.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.step').forEach(function (step) {
+    if (step.id === 'step-0') return; // обложку не трогаем — у неё своя анимация появления
+    Array.prototype.forEach.call(step.children, function (el) {
+      if (el.classList.contains('step-eyebrow') || el.classList.contains('step-title') ||
+          el.classList.contains('nav-bottom') || el.classList.contains('finish-reveal')) return;
+      el.classList.add('reveal');
+      revObserver.observe(el);
+    });
+  });
+
+  // мгновенно показываем блоки, попавшие в экран при переходе на шаг
+  window.kickReveal = function () {
+    var step = document.querySelector('.step.active');
+    if (!step) return;
+    step.querySelectorAll('.reveal:not(.in)').forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.92 && r.bottom > 0) el.classList.add('in');
+    });
+  };
+}
 </script>
 </body>
 </html>
