@@ -1,0 +1,4227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Воркбук — Страх публичных выступлений</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #F5F0EB;
+  --bg2:   #FAF7F4;
+  --dark:  #3A1515;
+  --text:  #1C1A18;
+  --sub:   #7A7572;
+  --red:   #8B2E2E;
+  --blue:  #8FAFC2;
+  --nude:  #DDD4C7;
+  --line:  #E2DFDC;
+  --hk:    'Hanken Grotesk', sans-serif;
+  --bc:    'Barlow Condensed', sans-serif;
+  /* объём */
+  --card-bg:     linear-gradient(160deg, #FFFFFF 0%, #FAF7F4 100%);
+  --shadow-sm:   0 1px 3px rgba(58,21,21,0.05), 0 4px 12px rgba(58,21,21,0.04);
+  --shadow-md:   0 2px 8px rgba(58,21,21,0.06), 0 12px 28px rgba(58,21,21,0.07);
+  --shadow-badge: 0 2px 6px rgba(139,46,46,0.28);
+  --radius:      14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--hk);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-bar-wrap {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--line);
+  z-index: 200;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--red);
+  transition: width 0.4s ease;
+}
+
+/* ── NAV ── */
+.top-nav {
+  position: fixed;
+  top: 3px; left: 0; right: 0;
+  height: 52px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 100;
+}
+.nav-brand {
+  font-family: var(--hk);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.nav-step {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--text);
+}
+
+/* ── WRAPPER ── */
+.wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 100px 40px 120px;
+}
+
+/* ── STEP ── */
+.step { display: none; }
+.step.active { display: block; animation: fadeIn 0.35s ease; }
+
+/* Обложка — контент по центру */
+#step-0 {
+  text-align: center;
+  display: none;
+}
+#step-0.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#step-0 .cover-desc,
+#step-0 .cover-disclaimer {
+  margin-left: auto;
+  margin-right: auto;
+}
+#step-0 .nav-bottom { width: 100%; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── COVER (step 0) ── */
+.cover-cta {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+.btn-start {
+  font-family: var(--hk);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #FAF7F4;
+  background: linear-gradient(135deg, #A33636 0%, #8B2E2E 60%, #6F2424 100%);
+  border: none;
+  border-radius: 999px;
+  padding: 18px 64px;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 6px 20px rgba(139,46,46,0.40);
+  animation: startPulse 2.2s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-start:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(139,46,46,0.55);
+}
+.btn-start:active { transform: translateY(0) scale(0.99); }
+@keyframes startPulse {
+  0%   { box-shadow: 0 6px 20px rgba(139,46,46,0.40), 0 0 0 0 rgba(139,46,46,0.45); }
+  70%  { box-shadow: 0 6px 22px rgba(139,46,46,0.45), 0 0 0 18px rgba(139,46,46,0); }
+  100% { box-shadow: 0 6px 20px rgba(139,46,46,0.40), 0 0 0 0 rgba(139,46,46,0); }
+}
+/* мягкое внутреннее сияние-блик */
+.btn-start::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(120deg, rgba(255,255,255,0.30), rgba(255,255,255,0) 45%);
+  pointer-events: none;
+}
+.cover-label {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+  background: rgba(139,46,46,0.10);
+  padding: 7px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+.cover-title {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 64px;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1;
+  margin-top: 44px;
+  margin-bottom: 6px;
+}
+.cover-subtitle {
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 32px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 4px;
+}
+.cover-divider {
+  margin: 10px 0 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.cover-divider svg { display: block; }
+.cover-desc {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.7;
+  max-width: 520px;
+  margin-bottom: 28px;
+  text-align: left;
+}
+.cover-disclaimer {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 520px;
+  margin-bottom: 40px;
+  padding: 16px 20px 16px 48px;
+  position: relative;
+  text-align: left;
+  background: rgba(139,46,46,0.14);
+  border: 1px solid rgba(139,46,46,0.30);
+  border-radius: 12px;
+}
+.cover-disclaimer::before {
+  content: "🔒";
+  position: absolute;
+  left: 18px;
+  top: 16px;
+  font-size: 16px;
+}
+
+/* Photo placeholder */
+.photo-placeholder {
+  background: var(--nude);
+  border: 1.5px dashed var(--red);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--red);
+  gap: 8px;
+  opacity: 0.7;
+}
+.photo-placeholder .ph-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.photo-placeholder .ph-hint {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--sub);
+}
+
+.photo-cover {
+  width: 100%;
+  height: 240px;
+  margin-bottom: 40px;
+}
+
+/* Real photo/illustration (replaces placeholder) */
+.photo-filled {
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: transparent;
+}
+.photo-filled img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+}
+.photo-cover.photo-filled img {
+  height: auto;
+  object-fit: contain;
+  object-position: center center;
+}
+.photo-cover.photo-filled {
+  height: auto;
+}
+.photo-inline.photo-filled {
+  height: auto;
+  margin: 24px 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-md);
+  background: transparent;
+  animation: photoGlow 3.6s ease-in-out infinite;
+}
+@keyframes photoGlow {
+  0%   { box-shadow: 0 2px 8px rgba(58,21,21,0.06), 0 12px 28px rgba(58,21,21,0.07), 0 0 0 0 rgba(139,46,46,0); }
+  50%  { box-shadow: 0 2px 10px rgba(58,21,21,0.07), 0 14px 32px rgba(58,21,21,0.08), 0 0 22px 4px rgba(139,46,46,0.16); }
+  100% { box-shadow: 0 2px 8px rgba(58,21,21,0.06), 0 12px 28px rgba(58,21,21,0.07), 0 0 0 0 rgba(139,46,46,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photo-inline.photo-filled { animation: none; }
+}
+.photo-inline.photo-filled img {
+  height: auto;
+  object-fit: contain;
+  margin: 0;
+  border-radius: var(--radius);
+}
+@media (max-width: 640px) {
+  .photo-inline.photo-filled { height: auto; }
+}
+
+.photo-real {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.photo-real.photo-cover-img {
+  height: auto;
+  max-height: 560px;
+  object-fit: contain;
+  object-position: center top;
+  background: var(--nude);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 8px;
+}
+.photo-real.photo-inline-img {
+  height: 200px;
+  margin: 24px 0;
+}
+
+/* ── STEP HEADER ── */
+.step-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.step-num {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 14px;
+  color: #FAF7F4;
+  letter-spacing: 0.06em;
+  background: var(--red);
+  padding: 4px 12px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-badge);
+}
+.step-wave {
+  flex: 1;
+}
+
+.step-title {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 36px;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1.05;
+  margin-bottom: 14px;
+}
+.step-title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin-top: 14px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+}
+.step-title { margin-bottom: 28px; }
+
+/* ── THEORY BLOCK ── */
+.theory {
+  margin-bottom: 32px;
+}
+.theory p {
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+.theory p:last-child { margin-bottom: 0; }
+
+/* ── HIGHLIGHT BOX ── */
+.highlight {
+  position: relative;
+  background: rgba(139,46,46,0.07);
+  color: var(--text);
+  border: 1px solid rgba(139,46,46,0.18);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.highlight::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+}
+.highlight p {
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text);
+}
+.highlight strong {
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* ── THESIS (тезис на полупрозрачной плашке) ── */
+.thesis {
+  position: relative;
+  background: rgba(143,175,194,0.16);
+  border: 1px solid rgba(143,175,194,0.40);
+  border-radius: var(--radius);
+  padding: 22px 28px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.thesis::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--red), var(--blue));
+}
+.thesis p {
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--text);
+  text-transform: none;
+  margin: 0;
+}
+.thesis .em-dash {
+  font-family: var(--hk);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+.thesis-conclusion {
+  background: rgba(139,46,46,0.07);
+  border-color: rgba(139,46,46,0.20);
+}
+.thesis-conclusion::before {
+  background: linear-gradient(180deg, var(--blue), var(--red));
+}
+.thesis-conclusion p {
+  font-family: var(--hk);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.6;
+}
+.thesis-conclusion p strong { color: var(--red); font-weight: 700; }
+
+/* ── SOLUTION (что делать) ── */
+.solution {
+  position: relative;
+  background: linear-gradient(160deg, rgba(143,175,194,0.20), rgba(143,175,194,0.10));
+  border: 1px solid rgba(143,175,194,0.45);
+  border-radius: var(--radius);
+  padding: 26px 28px 22px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.solution::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--red));
+}
+.solution-label {
+  display: inline-block;
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #FAF7F4;
+  background: var(--red);
+  padding: 6px 18px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-badge);
+  margin-bottom: 16px;
+}
+.solution p {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+.solution p:last-child { margin-bottom: 0; }
+.solution p strong { color: var(--red); font-weight: 600; }
+
+/* ── WARNING (дисклеймер) ── */
+.warning {
+  position: relative;
+  background: rgba(139,46,46,0.06);
+  border: 1px solid rgba(139,46,46,0.22);
+  border-radius: var(--radius);
+  padding: 24px 28px 22px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.warning::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: var(--red);
+}
+.warning-label {
+  display: inline-block;
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #FAF7F4;
+  background: var(--red);
+  padding: 5px 16px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-badge);
+  margin-bottom: 14px;
+}
+.warning p {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── STAT BOX ── */
+.stat-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.stat-box {
+  flex: 1;
+  min-width: 130px;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 20px 22px;
+  text-align: center;
+}
+.stat-num {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 42px;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-desc {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--sub);
+  line-height: 1.4;
+}
+
+/* ── SCHEME / LIST ── */
+.scheme {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 26px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.scheme::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+}
+.scheme-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 16px;
+}
+.scheme-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.6;
+}
+.scheme-item:last-child { margin-bottom: 0; }
+.scheme-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--blue);
+  flex-shrink: 0;
+  margin-top: 8px;
+  box-shadow: 0 1px 3px rgba(58,21,21,0.18);
+}
+
+/* ── REASSURE PILL (нормализация) ── */
+.reassure {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(160deg, #FFFFFF 0%, #FBF5F2 100%);
+  border: 1.5px solid var(--red);
+  border-radius: 12px;
+  padding: 16px 18px 16px 26px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-sm);
+}
+.reassure-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--red);
+  line-height: 1.35;
+}
+.reassure-btn {
+  flex-shrink: 0;
+  background: var(--nude);
+  border: 1.5px solid var(--red);
+  color: var(--red);
+  font-family: var(--hk);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 10px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.reassure-btn:hover { background: var(--red); color: var(--bg2); }
+.reassure.is-marked .reassure-btn {
+  background: var(--red);
+  color: var(--bg2);
+  border-color: var(--red);
+}
+.reassure.is-marked .reassure-btn-label::before { content: "✓ "; }
+
+/* ── DEFINITION CARD (глоссофобия) ── */
+.definition {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.definition::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+}
+.definition-term {
+  display: inline-block;
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #FAF7F4;
+  background: var(--red);
+  padding: 6px 16px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-badge);
+  margin-bottom: 14px;
+}
+.definition p {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── CHECKLIST (нормализация симптомов) ── */
+.checklist {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.checklist::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+}
+.checklist-q {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 0;
+  cursor: pointer;
+  user-select: none;
+}
+.check-item input { position: absolute; opacity: 0; pointer-events: none; }
+.check-box {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid var(--red);
+  border-radius: 6px;
+  background: var(--bg);
+  position: relative;
+  transition: background 0.15s;
+}
+.check-item input:checked + .check-box {
+  background: var(--red);
+  box-shadow: var(--shadow-badge);
+}
+.check-item input:checked + .check-box::after {
+  content: "";
+  position: absolute;
+  left: 8px; top: 4px;
+  width: 6px; height: 11px;
+  border: solid var(--bg2);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+.check-label {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.4;
+}
+.checklist-note {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.6;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding-top: 0;
+  margin-top: 0;
+  border-top: none;
+  transition: opacity 0.4s ease, max-height 0.4s ease, margin-top 0.4s, padding-top 0.4s;
+}
+.checklist.is-revealed .checklist-note {
+  max-height: 220px;
+  opacity: 1;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+/* ── VICIOUS CYCLE (круговая диаграмма) ── */
+.cycle {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 28px 30px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.cycle::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+}
+.cycle-title {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--red);
+  line-height: 1.05;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.cycle-diagram {
+  max-width: 360px;
+  margin: 0 auto;
+}
+.cycle-diagram svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.cycle-diagram .cyc-n {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 17px;
+  fill: var(--dark);
+}
+.cycle-diagram .cyc-t {
+  font-family: var(--hk);
+  font-weight: 600;
+  font-size: 12px;
+  fill: var(--dark);
+}
+
+/* ── RESEARCH SOURCE FOOTNOTE ── */
+.research-source {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--bg2);
+  border-left: 4px solid var(--blue);
+  border-radius: 0 10px 10px 0;
+  padding: 16px 20px 16px 18px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+}
+.research-source-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+.research-source-text {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.6;
+}
+.research-source-text strong {
+  font-weight: 600;
+  color: var(--text);
+}
+.research-source-text a {
+  color: var(--red);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(139,46,46,0.3);
+}
+.research-source-text a:hover {
+  border-bottom-color: var(--red);
+}
+
+/* ── RESEARCH CARD (развёрнутое исследование, по референсу) ── */
+.research-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.research-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--red));
+}
+.research-card-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.research-card-badge {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: var(--shadow-badge);
+}
+.research-card-titles { display: flex; flex-direction: column; gap: 3px; }
+.research-card-name {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  line-height: 1.05;
+}
+.research-card-meta {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sub);
+}
+.research-card-body p {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+.research-card-body p:last-child { margin-bottom: 0; }
+.research-card-body strong { font-weight: 600; color: var(--red); }
+.card-img {
+  margin: 0 0 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.card-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.photo-placeholder-note {
+  border: 2px dashed rgba(139,46,46,0.35) !important;
+  background: rgba(139,46,46,0.04) !important;
+  box-shadow: none !important;
+  animation: none !important;
+  padding: 40px 24px;
+  text-align: center;
+}
+.photo-placeholder-note .ph-note {
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--red);
+}
+
+/* ── FACTBOX (историческая справка) ── */
+.factbox {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.factbox::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--red));
+}
+.factbox-label {
+  display: inline-block;
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #FAF7F4;
+  background: var(--red);
+  padding: 6px 16px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-badge);
+  margin-bottom: 22px;
+}
+.factbox-items {
+  position: relative;
+  padding-left: 8px;
+}
+.factbox-item {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.factbox-item:last-child { border-bottom: none; }
+.factbox-year {
+  flex-shrink: 0;
+  width: 92px;
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 24px;
+  color: var(--red);
+  line-height: 1;
+}
+.factbox-text {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ── FLIP CARDS (миф/правда) ── */
+.flip-intro {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sub);
+  text-align: center;
+  margin-bottom: 16px;
+  letter-spacing: 0.01em;
+}
+.flip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.flip-card {
+  perspective: 1200px;
+  cursor: pointer;
+  min-height: 160px;
+}
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 160px;
+  transition: transform 0.6s cubic-bezier(0.4,0.2,0.2,1);
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius);
+  padding: 22px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+.flip-front {
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+}
+.flip-front::before {
+  content: "Миф";
+  position: absolute;
+  top: 12px; left: 14px;
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+.flip-front span {
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.15;
+  color: var(--text);
+}
+.flip-back {
+  background: rgba(143,175,194,0.16);
+  border: 1px solid rgba(143,175,194,0.45);
+  transform: rotateY(180deg);
+}
+.flip-back::before {
+  content: "На самом деле";
+  position: absolute;
+  top: 12px; left: 14px;
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.flip-back span {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text);
+}
+@media (max-width: 600px) {
+  .flip-grid { grid-template-columns: 1fr; }
+}
+
+/* ── CHOOSE CARDS (типы волнения, кликабельные) ── */
+.choose-intro {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sub);
+  text-align: center;
+  margin-bottom: 16px;
+}
+.choose-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.choose-card {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  animation: choosePulse 2.6s ease-in-out infinite;
+}
+.choose-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--red), var(--blue));
+}
+@keyframes choosePulse {
+  0%,100% { box-shadow: 0 2px 8px rgba(58,21,21,0.06), 0 0 0 0 rgba(139,46,46,0); }
+  50%     { box-shadow: 0 4px 14px rgba(58,21,21,0.10), 0 0 0 6px rgba(139,46,46,0.07); }
+}
+.choose-card.opened { animation: none; }
+.choose-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 22px 20px 26px;
+}
+.choose-card-title {
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.15;
+  color: var(--text);
+}
+.choose-card-title strong { color: var(--red); font-weight: 900; }
+.choose-card-arrow {
+  flex-shrink: 0;
+  font-size: 18px;
+  color: var(--red);
+  transition: transform 0.3s ease;
+}
+.choose-card.opened .choose-card-arrow { transform: rotate(180deg); }
+.choose-card-body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+  padding: 0 26px;
+}
+.choose-card.opened .choose-card-body {
+  max-height: 400px;
+  opacity: 1;
+  padding: 0 26px 22px;
+}
+.choose-card-body p {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.choose-card-body p:last-child { margin-bottom: 0; }
+
+/* ── LEVELS (три уровня, схема) ── */
+.levels {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 24px 28px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.levels::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+}
+.levels-title {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--red);
+  text-align: center;
+  margin-bottom: 22px;
+}
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.level-card {
+  text-align: center;
+  padding: 18px 12px;
+  border-radius: 12px;
+  background: rgba(143,175,194,0.10);
+  border: 1px solid var(--line);
+}
+.level-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 12px;
+  background: #FAF7F4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+.level-icon svg { width: 30px; height: 30px; }
+.level-name {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 19px;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.level-desc {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--sub);
+  line-height: 1.45;
+}
+@media (max-width: 600px) {
+  .levels-grid { grid-template-columns: 1fr; gap: 12px; }
+  .level-card { display: flex; align-items: center; text-align: left; gap: 14px; padding: 14px; }
+  .level-icon { margin: 0; flex-shrink: 0; }
+  .level-card .level-name { margin-bottom: 4px; }
+}
+
+/* ── POSTURE (поза, схема) ── */
+.posture {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 24px 28px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.posture::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--red));
+}
+.posture-title {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--red);
+  text-align: center;
+  margin-bottom: 22px;
+}
+.posture-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.posture-card {
+  text-align: center;
+  padding: 18px 12px;
+  border-radius: 12px;
+  background: rgba(143,175,194,0.10);
+  border: 1px solid var(--line);
+}
+.posture-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 12px;
+  background: #FAF7F4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+.posture-icon svg { width: 40px; height: 40px; }
+.posture-name {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 17px;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.05;
+}
+.posture-desc {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--sub);
+  line-height: 1.45;
+}
+@media (max-width: 600px) {
+  .posture-grid { grid-template-columns: 1fr; gap: 12px; }
+  .posture-card { display: flex; align-items: center; text-align: left; gap: 14px; padding: 14px; }
+  .posture-icon { margin: 0; flex-shrink: 0; }
+  .posture-card .posture-name { margin-bottom: 4px; }
+}
+
+/* ── GATE (вопрос-кнопка перед переходом) ── */
+.gate {
+  text-align: center;
+  background: rgba(139,46,46,0.05);
+  border: 1px solid rgba(139,46,46,0.22);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-sm);
+}
+.gate-q {
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1.25;
+  margin-bottom: 22px;
+}
+.gate-levels {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.gate-level {
+  flex: 1 1 0;
+  max-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 8px 14px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.025);
+  border: 1px solid var(--line);
+  position: relative;
+  transition: background 0.5s ease, border-color 0.5s ease, transform 0.5s ease;
+}
+.gate-level-ic {
+  width: 34px;
+  height: 34px;
+  transition: opacity 0.5s ease, filter 0.5s ease;
+}
+.gate-level-ic svg { width: 100%; height: 100%; }
+.gate-level-ic svg [stroke] { transition: stroke 0.5s ease; }
+.gate-level-name {
+  font-family: var(--hk);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sub);
+  transition: color 0.5s ease;
+}
+.gate-level-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gate-level-badge svg { width: 100%; height: 100%; }
+.gate-check { display: none; }
+/* пройденный уровень */
+.gate-level.done {
+  background: rgba(139,46,46,0.09);
+  border-color: rgba(139,46,46,0.30);
+}
+.gate-level.done .gate-level-name { color: var(--red); }
+.gate-level.done .gate-level-ic svg [stroke] { stroke: #8B2E2E; }
+.gate-level.done .gate-lock { display: none; }
+.gate-level.done .gate-check { display: flex; }
+/* закрытый уровень */
+.gate-level.locked .gate-level-ic { opacity: 0.45; filter: grayscale(1); }
+.gate-level.locked .gate-level-ic svg [stroke] { stroke: #B8B0A8; }
+/* после ответа — закрытые уровни загораются каскадом */
+.gate.answered .gate-level.locked {
+  background: rgba(139,46,46,0.09);
+  border-color: rgba(139,46,46,0.30);
+  transform: translateY(-3px);
+}
+.gate.answered .gate-level.locked .gate-level-ic { opacity: 1; filter: none; }
+.gate.answered .gate-level.locked .gate-level-ic svg [stroke] { stroke: #8B2E2E; }
+.gate.answered .gate-level.locked .gate-level-name { color: var(--red); }
+.gate.answered .gate-level.locked .gate-lock { display: none; }
+.gate.answered .gate-level.locked .gate-check { display: flex; }
+.gate.answered .gate-level:nth-child(2) { transition-delay: 0.12s; }
+.gate.answered .gate-level:nth-child(2) .gate-level-ic,
+.gate.answered .gate-level:nth-child(2) .gate-level-name { transition-delay: 0.12s; }
+.gate.answered .gate-level:nth-child(3) { transition-delay: 0.34s; }
+.gate.answered .gate-level:nth-child(3) .gate-level-ic,
+.gate.answered .gate-level:nth-child(3) .gate-level-name { transition-delay: 0.34s; }
+.gate-btn {
+  font-family: var(--hk);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #FAF7F4;
+  background: linear-gradient(135deg, #A33636, #8B2E2E 70%);
+  border: none;
+  border-radius: 999px;
+  padding: 12px 34px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(139,46,46,0.30);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.gate-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(139,46,46,0.44); }
+.gate-answer {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease 0.5s, opacity 0.4s ease 0.5s, margin-top 0.4s 0.5s;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--red);
+}
+.gate.answered .gate-answer {
+  max-height: 80px;
+  opacity: 1;
+  margin-top: 6px;
+}
+.gate.answered .gate-btn { display: none; }
+@media (max-width: 600px) {
+  .gate-levels { gap: 8px; }
+  .gate-level { padding: 13px 4px 11px; gap: 6px; }
+  .gate-level-name { font-size: 13px; }
+  .gate-level-ic { width: 28px; height: 28px; }
+}
+
+/* ── PRACTICE LIST (раскрывающиеся практики) ── */
+.practice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.practice-card {
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+.practice-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: var(--blue);
+  transition: background 0.3s;
+}
+.practice-card.opened::before { background: var(--red); }
+.practice-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px 16px 24px;
+}
+.practice-name {
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--text);
+}
+.practice-arrow {
+  flex-shrink: 0;
+  font-size: 16px;
+  color: var(--red);
+  transition: transform 0.3s ease;
+}
+.practice-card.opened .practice-arrow { transform: rotate(180deg); }
+.practice-body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+  padding: 0 24px;
+}
+.practice-card.opened .practice-body {
+  max-height: 300px;
+  opacity: 1;
+  padding: 0 24px 18px;
+}
+.practice-body p {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── EXERCISE (упражнение с шагами) ── */
+.exercise {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  margin-bottom: 32px;
+  position: relative;
+}
+.exercise::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+  z-index: 1;
+}
+.exercise-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 22px 24px;
+  cursor: pointer;
+}
+.exercise-label {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sub);
+  margin-bottom: 2px;
+}
+.exercise-name {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 26px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--red);
+  line-height: 1;
+}
+.exercise-arrow {
+  flex-shrink: 0;
+  font-size: 20px;
+  color: var(--red);
+  transition: transform 0.3s ease;
+}
+.exercise.opened .exercise-arrow { transform: rotate(180deg); }
+.exercise-body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.5s ease;
+  padding: 0 24px;
+}
+.exercise.opened .exercise-body {
+  max-height: 4000px;
+  opacity: 1;
+  padding: 0 24px 24px;
+}
+.exercise-intro {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--sub);
+  line-height: 1.5;
+  margin: 0 0 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.ex-step {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.ex-num {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #FAF7F4;
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-badge);
+}
+.ex-content { flex: 1; min-width: 0; }
+.ex-q {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.ex-rate {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+.ex-slider { margin-bottom: 4px; }
+.ex-ps {
+  background: rgba(143,175,194,0.14);
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.55;
+  margin-top: 8px;
+}
+.ex-ps::before {
+  content: "P.S. ";
+  font-weight: 700;
+  color: var(--red);
+}
+
+/* ── QUOTE ── */
+.quote-block {
+  border-left: 3px solid var(--red);
+  padding: 16px 24px;
+  margin-bottom: 32px;
+}
+.quote-text {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.quote-source {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--sub);
+  letter-spacing: 0.06em;
+}
+
+/* ── QUOTE BUBBLE (реплика-мысль) ── */
+.quote-bubble {
+  position: relative;
+  border-left: none;
+  background: #F7F2ED;
+  border: 1.5px solid rgba(139,46,46,0.28);
+  border-radius: 18px;
+  padding: 30px 28px 22px;
+  margin: 10px 0 44px;
+  box-shadow: var(--shadow-sm);
+}
+.quote-bubble::before {
+  content: "\201C";
+  position: absolute;
+  top: 4px;
+  left: 18px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 60px;
+  line-height: 1;
+  color: rgba(139,46,46,0.20);
+}
+.quote-bubble .quote-text {
+  position: relative;
+  font-style: italic;
+  padding-left: 30px;
+}
+.quote-bubble .quote-source {
+  text-align: right;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--red);
+  margin-top: 12px;
+}
+.quote-bubble::after {
+  content: "";
+  position: absolute;
+  left: 46px;
+  bottom: -11px;
+  width: 20px;
+  height: 20px;
+  background: #F7F2ED;
+  border-right: 1.5px solid rgba(139,46,46,0.28);
+  border-bottom: 1.5px solid rgba(139,46,46,0.28);
+  transform: rotate(45deg);
+}
+
+/* ── PRACTICE INTRO (заголовок секции практик) ── */
+.practice-intro {
+  margin-top: 44px;
+  margin-bottom: 18px;
+}
+.practice-intro-title {
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.practice-intro p {
+  color: var(--sub);
+}
+
+/* ── EGO STATES (cards) ── */
+.ego-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.ego-card {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 18px 16px;
+}
+.ego-card.accent { border-color: var(--red); }
+.ego-card-title {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+.ego-card-body {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+/* ── CIRCLES (Stanislavsky) ── */
+.circles-viz-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 32px 0;
+  width: 100%;
+}
+.circles-viz {
+  position: relative;
+  width: clamp(180px, 60vw, 280px);
+  height: clamp(180px, 60vw, 280px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.circle-ring {
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.circle-large {
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid var(--line);
+}
+.circle-medium {
+  width: 64%;
+  height: 64%;
+  border: 1.5px solid var(--blue);
+  background: rgba(143,175,194,0.06);
+}
+.circle-small {
+  width: 28%;
+  height: 28%;
+  background: rgba(139,46,46,0.08);
+  border: 2px solid var(--red);
+}
+.circle-small span {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+  text-align: center;
+  line-height: 1.3;
+}
+.circle-label-large {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--sub);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.circle-label-medium {
+  position: absolute;
+  bottom: 16%;
+  right: 4%;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--blue);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── PHOTO INLINE ── */
+.photo-inline {
+  width: 100%;
+  height: 200px;
+  margin: 24px 0;
+  border-radius: 4px;
+}
+
+/* ── SECTION DIVIDER ── */
+.section-sep {
+  margin: 36px 0;
+  border: none;
+  border-top: 1px solid var(--line);
+}
+
+/* ── PRACTICE ZONE ── */
+.practice-zone {
+  position: relative;
+  background: linear-gradient(160deg, #E5DBCD 0%, #DDD4C7 100%);
+  border: 1.5px solid var(--red);
+  border-radius: var(--radius);
+  padding: 30px 30px 26px;
+  margin-top: 40px;
+  box-shadow: var(--shadow-md);
+}
+.practice-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #FAF7F4;
+  background: var(--red);
+  padding: 5px 14px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-badge);
+  margin-bottom: 18px;
+}
+.practice-q {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Input field */
+.field {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 14px 16px;
+  font-family: var(--hk);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text);
+  resize: vertical;
+  min-height: 72px;
+  margin-bottom: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.field:focus { border-color: var(--red); }
+.field::placeholder { color: var(--sub); opacity: 0.6; }
+
+input.field {
+  min-height: unset;
+  height: 46px;
+  resize: none;
+}
+
+/* Interactive buttons (want-pattern) */
+.choice-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.choice-btn {
+  padding: 9px 18px;
+  background: var(--bg2);
+  border: 1.5px solid var(--nude);
+  border-radius: 40px;
+  font-family: var(--hk);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--sub);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.choice-btn:hover {
+  border-color: var(--red);
+  color: var(--text);
+}
+.choice-btn.selected {
+  background: var(--nude);
+  border-color: var(--red);
+  color: var(--red);
+  box-shadow: 0 0 0 3px rgba(139,46,46,0.08);
+}
+
+/* Slider */
+.slider-wrap { margin-bottom: 4px; }
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--red);
+  margin-top: 12px;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(90deg, var(--blue), var(--red));
+  border-radius: 6px;
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  background: var(--red);
+  border: 3px solid #FAF7F4;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(139,46,46,0.45);
+}
+input[type=range]::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  background: var(--red);
+  border: 3px solid #FAF7F4;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(139,46,46,0.45);
+}
+
+/* Impact scale plate */
+.impact-scale {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 28px 22px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.impact-scale::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+}
+.impact-q {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 22px;
+}
+.impact-feedback {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.6;
+  transition: opacity 0.4s ease, max-height 0.4s ease, margin-top 0.4s, padding-top 0.4s;
+}
+.impact-feedback.show {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.impact-feedback strong { color: var(--red); font-weight: 600; }
+
+/* Scale / rating */
+.scale-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.scale-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1.5px solid var(--line);
+  background: var(--bg2);
+  font-family: var(--hk);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sub);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.scale-btn:hover { border-color: var(--red); color: var(--red); }
+.scale-btn.selected { background: var(--red); border-color: var(--red); color: #FAF7F4; }
+
+/* ── PRACTICE PLACEHOLDER (action zone) ── */
+.action-placeholder {
+  background: var(--bg2);
+  border: 1.5px dashed var(--blue);
+  border-radius: 4px;
+  padding: 24px;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.ap-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--blue);
+  opacity: 0.3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ap-text {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--sub);
+  line-height: 1.5;
+}
+.ap-text strong {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 4px;
+}
+
+/* ── NAVIGATION ── */
+.nav-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.btn-nav {
+  padding: 12px 28px;
+  font-family: var(--hk);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+.btn-next {
+  background: var(--red);
+  color: #FAF7F4;
+}
+.btn-next:hover { background: var(--dark); }
+.btn-prev {
+  background: transparent;
+  color: var(--red);
+  border: 1.5px solid var(--red);
+}
+.btn-prev:hover { background: var(--red); color: #FAF7F4; }
+.btn-nav:disabled { opacity: 0.3; cursor: default; }
+
+.step-counter {
+  font-size: 11px;
+  color: var(--red);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+/* ── FINISH ── */
+.finish-title {
+  font-family: var(--bc);
+  font-weight: 900;
+  font-size: 48px;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1;
+}
+.finish-sub {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.65;
+  margin-bottom: 40px;
+}
+.finish-sig {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sub);
+  margin-top: 44px;
+}
+.finish-photo { text-align: center; margin-bottom: 30px; }
+.finish-photo-ph {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #F7F2ED;
+  border: 2px dashed rgba(139,46,46,0.40);
+}
+.finish-photo-ph svg { width: 52px; height: 52px; }
+.finish-photo-cap {
+  font-family: var(--hk);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8B2E2E;
+}
+
+/* ── RESPONSIVE — MOBILE (основной сценарий просмотра) ── */
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+
+  .top-nav { padding: 0 16px; height: 48px; }
+  .nav-brand { font-size: 12px; letter-spacing: 0.16em; }
+  .nav-step { font-size: 12px; }
+
+  .wrapper { padding: 80px 18px 90px; }
+
+  /* Cover */
+  .cover-title { font-size: 46px; }
+  .cover-subtitle { font-size: 24px; }
+  .cover-label { font-size: 13px; }
+  .cover-desc { font-size: 16px; }
+  .photo-cover { height: 180px; }
+  .photo-real.photo-cover-img { max-height: 460px; }
+  .photo-real.photo-inline-img { height: 160px; margin: 18px 0; }
+
+  /* Step header */
+  .step-title { font-size: 27px; margin-bottom: 18px; }
+  .step-eyebrow { margin-bottom: 20px; }
+
+  /* Theory text */
+  .theory p { font-size: 18px; line-height: 1.65; }
+
+  /* Highlight / quote / scheme */
+  .highlight { padding: 18px 18px; }
+  .highlight p { font-size: 18px; }
+  .quote-block { padding: 14px 16px; }
+  .quote-text { font-size: 15px; }
+  .scheme { padding: 16px 16px; }
+  .scheme-item { font-size: 13px; }
+  .research-source { padding: 8px 16px 8px 13px; }
+  .research-source-text { font-size: 10px; }
+
+  /* Stats */
+  .stat-row { flex-direction: column; }
+  .stat-box { min-width: 0; padding: 16px 18px; }
+  .stat-num { font-size: 34px; }
+
+  /* Ego cards */
+  .ego-grid { grid-template-columns: 1fr; gap: 10px; }
+
+  /* Photos */
+  .photo-inline { height: 160px; margin: 18px 0; }
+
+  /* Practice zone */
+  .practice-zone { padding: 20px 18px 18px; margin-top: 28px; }
+  .practice-q { font-size: 15px; }
+  .field { font-size: 14px; padding: 12px 14px; }
+  .choice-btn { padding: 8px 14px; font-size: 12px; }
+  .scale-btn { width: 36px; height: 36px; }
+
+  /* Action placeholder */
+  .action-placeholder { padding: 18px; gap: 12px; }
+
+  /* Bottom nav — keep on one row, no wrap/overflow */
+  .nav-bottom { margin-top: 36px; padding-top: 18px; gap: 6px; }
+  .btn-nav {
+    padding: 10px 14px;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .step-counter { font-size: 9px; white-space: nowrap; }
+
+  /* Finish screen */
+  .finish-title { font-size: 32px; }
+  .finish-sub { font-size: 17px; }
+}
+
+/* ── RESPONSIVE — SMALL PHONES (iPhone SE и уже) ── */
+@media (max-width: 375px) {
+  .wrapper { padding: 76px 14px 80px; }
+  .cover-title { font-size: 38px; }
+  .cover-subtitle { font-size: 21px; }
+  .step-title { font-size: 23px; }
+  .btn-nav { padding: 9px 10px; font-size: 9px; }
+  .btn-nav.btn-next { padding: 9px 12px; }
+  .step-counter { display: none; } /* экономим место — счётчик дублирует прогресс-бар */
+  .practice-zone, .scheme, .highlight { padding-left: 14px; padding-right: 14px; }
+}
+/* ── TABLE OF CONTENTS (выезжающее оглавление) ── */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.menu-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 7px;
+  transition: background 0.18s;
+}
+.menu-btn:hover { background: rgba(139,46,46,0.08); }
+.menu-btn span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--red);
+}
+.toc-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(40,28,28,0.40);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 300;
+}
+body.menu-open .toc-overlay { opacity: 1; visibility: visible; }
+.toc-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  max-width: 84vw;
+  background: var(--bg);
+  box-shadow: 4px 0 30px rgba(0,0,0,0.18);
+  transform: translateX(-100%);
+  transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+  z-index: 310;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 28px;
+  overflow-y: auto;
+}
+body.menu-open .toc-drawer { transform: translateX(0); }
+.toc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px 16px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+.toc-title {
+  font-family: var(--hk);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.toc-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--sub);
+  padding: 2px 6px;
+}
+.toc-close:hover { color: var(--red); }
+.toc-list { padding: 8px 0; }
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 11px 22px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.toc-item:hover { background: rgba(139,46,46,0.06); }
+.toc-num {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(139,46,46,0.09);
+  color: var(--red);
+  font-family: var(--hk);
+  font-size: 12px;
+  font-weight: 700;
+}
+.toc-name {
+  font-family: var(--hk);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.2;
+}
+.toc-item.active { background: var(--red); }
+.toc-item.active .toc-num { background: rgba(250,247,244,0.22); color: #FAF7F4; }
+.toc-item.active .toc-name { color: #FAF7F4; }
+@media (max-width: 600px) {
+  .nav-brand { display: none; }
+}
+
+/* ── KEY THOUGHT (главная мысль) ── */
+.key-thought {
+  background: linear-gradient(135deg, #9A3636, #8B2E2E 70%);
+  color: #FAF7F4;
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 1.35;
+  text-align: center;
+  padding: 26px 28px;
+  border-radius: 16px;
+  margin: 4px 0 32px;
+  box-shadow: 0 10px 30px rgba(139,46,46,0.30);
+}
+.key-footnote {
+  font-size: 15px;
+  font-style: italic;
+  color: var(--sub);
+  line-height: 1.5;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+/* ── VOICE GAME (развилка) ── */
+.voice-game {
+  background: linear-gradient(180deg, #F8F3EE, #F3ECE4);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px 22px 26px;
+  margin-bottom: 32px;
+}
+.voice-stimulus-wrap { text-align: center; }
+.voice-stimulus {
+  position: relative;
+  display: inline-block;
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1.5px solid rgba(139,46,46,0.30);
+  border-radius: 26px;
+  padding: 15px 32px;
+  box-shadow: 0 6px 16px rgba(40,28,28,0.10);
+  margin-bottom: 22px;
+}
+.voice-stimulus::before,
+.voice-stimulus::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1.5px solid rgba(139,46,46,0.30);
+}
+.voice-stimulus::before { width: 14px; height: 14px; bottom: -11px; margin-left: -20px; }
+.voice-stimulus::after { width: 8px; height: 8px; bottom: -23px; margin-left: -7px; }
+.voice-hint {
+  font-family: var(--hk);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sub);
+  text-align: center;
+  margin: 6px 0 2px;
+}
+.voice-fork {
+  display: block;
+  width: 100%;
+  height: 92px;
+  margin: 0 0 6px;
+}
+.voice-fork path {
+  stroke: var(--red);
+  stroke-width: 2.5;
+  fill: none;
+  opacity: 0.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.voice-branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.voice-branch {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #FFFFFF, #FAF6F1);
+  border: 1.5px solid rgba(139,46,46,0.22);
+  border-radius: 18px;
+  cursor: pointer;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  box-shadow: 0 6px 18px rgba(40,28,28,0.08);
+  overflow: hidden;
+}
+@keyframes voicePulse {
+  0%, 100% {
+    box-shadow: 0 6px 18px rgba(40,28,28,0.08);
+    border-color: rgba(139,46,46,0.22);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(139,46,46,0.10), 0 10px 30px rgba(139,46,46,0.40);
+    border-color: rgba(139,46,46,0.70);
+    transform: translateY(-2px);
+  }
+}
+.voice-branch:not(.opened) { animation: voicePulse 1.6s ease-in-out infinite; }
+.voice-branch.adult:not(.opened) { animation-delay: 0.8s; }
+.voice-branch:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(40,28,28,0.16);
+  animation: none;
+}
+.voice-branch.opened { animation: none; }
+.voice-branch-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70px;
+  padding: 18px 40px;
+  text-align: center;
+}
+.voice-branch-label {
+  font-family: var(--bc);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--text);
+  line-height: 1.3;
+}
+.voice-branch-plus {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 16px;
+  height: 16px;
+}
+.voice-branch-plus::before,
+.voice-branch-plus::after {
+  content: "";
+  position: absolute;
+  background: var(--red);
+  border-radius: 2px;
+}
+.voice-branch-plus::before { left: 0; top: 7px; width: 16px; height: 2px; }
+.voice-branch-plus::after { left: 7px; top: 0; width: 2px; height: 16px; transition: transform 0.3s ease; }
+.voice-branch.opened .voice-branch-plus::after { transform: scaleY(0); }
+.voice-branch-body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.38s ease, opacity 0.38s ease, padding 0.38s ease;
+  padding: 0 18px;
+  text-align: left;
+}
+.voice-branch.opened .voice-branch-body {
+  max-height: 340px;
+  opacity: 1;
+  padding: 0 18px 18px;
+}
+.voice-branch.opened.critic { border-color: rgba(139,46,46,0.45); }
+.voice-branch.opened.adult { border-color: rgba(78,115,136,0.45); }
+.voice-tag {
+  display: inline-block;
+  font-family: var(--hk);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.35;
+  padding: 6px 12px;
+  border-radius: 9px;
+  margin-bottom: 11px;
+}
+.voice-tag-critic { background: rgba(139,46,46,0.12); color: var(--red); }
+.voice-tag-adult { background: rgba(143,175,194,0.20); color: #4E7388; }
+.voice-branch-body p {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.55;
+}
+@media (max-width: 560px) {
+  .voice-fork { display: none; }
+  .voice-branches { grid-template-columns: 1fr; gap: 12px; }
+}
+
+/* ── CIRCLE DEFINITIONS + APPLY ── */
+.circle-defs { display: flex; flex-direction: column; gap: 10px; margin: 4px 0 20px; }
+.circle-def {
+  background: #F7F2ED;
+  border-left: 4px solid var(--red);
+  border-radius: 0 12px 12px 0;
+  padding: 13px 18px;
+}
+.circle-def-name {
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--red);
+  margin-bottom: 3px;
+}
+.circle-def-text { font-size: 15px; color: var(--text); line-height: 1.5; }
+.apply-title {
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.apply-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 14px; }
+.apply-item { display: flex; gap: 14px; align-items: flex-start; }
+.apply-num {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--red);
+  color: #FAF7F4;
+  font-family: var(--hk);
+  font-size: 14px;
+  font-weight: 700;
+}
+.apply-text { font-size: 16px; color: var(--text); line-height: 1.5; padding-top: 3px; }
+.apply-text strong { color: var(--red); }
+
+/* ── CIRCLE QUIZ (тест) ── */
+.quiz-section {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 2px dashed var(--line);
+}
+.quiz-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--hk);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #FAF7F4;
+  background: linear-gradient(135deg, #A33636, #8B2E2E 70%);
+  padding: 8px 20px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 16px rgba(139,46,46,0.28);
+}
+.cq-title {
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.cq-intro {
+  font-family: var(--hk);
+  font-size: 16px;
+  color: var(--sub);
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+.cq-item {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 26px 24px 24px;
+  margin-bottom: 22px;
+  box-shadow: 0 8px 26px rgba(40,28,28,0.09);
+}
+.cq-step {
+  display: inline-block;
+  font-family: var(--hk);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  background: rgba(139,46,46,0.10);
+  padding: 5px 13px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.cq-question {
+  font-family: var(--bc);
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--text);
+  line-height: 1.45;
+  margin-bottom: 22px;
+}
+.cq-options {
+  display: flex;
+  gap: 12px;
+}
+.cq-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--hk);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  background: linear-gradient(180deg, #FFFFFF, #FAF6F1);
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 8px 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(40,28,28,0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.cq-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(40,28,28,0.15);
+  border-color: rgba(139,46,46,0.40);
+}
+.cq-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+}
+.cq-ring span {
+  display: block;
+  border-radius: 50%;
+  border: 2.5px solid var(--red);
+  transition: border-color 0.2s, background 0.2s;
+}
+.cq-ring.small span { width: 14px; height: 14px; }
+.cq-ring.medium span { width: 24px; height: 24px; }
+.cq-ring.large span { width: 33px; height: 33px; }
+.cq-item.answered .cq-btn { cursor: default; }
+.cq-item.answered .cq-btn:hover { transform: none; box-shadow: 0 4px 12px rgba(40,28,28,0.07); }
+.cq-btn.correct {
+  background: linear-gradient(180deg, #4E9070, #3E7C5A);
+  border-color: #3E7C5A;
+  color: #FAF7F4;
+  box-shadow: 0 10px 24px rgba(62,124,90,0.34);
+}
+.cq-btn.correct .cq-ring span { border-color: #FAF7F4; background: rgba(250,247,244,0.30); }
+.cq-btn.wrong {
+  background: rgba(139,46,46,0.08);
+  border-color: var(--red);
+  color: var(--red);
+}
+.cq-verdict {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  font-family: var(--bc);
+  font-weight: 700;
+  font-size: 18px;
+  transition: max-height 0.35s ease, opacity 0.35s ease, margin-top 0.35s ease;
+}
+.cq-item.answered .cq-verdict { max-height: 44px; opacity: 1; margin-top: 18px; }
+.cq-verdict.right { color: #3E7C5A; }
+.cq-verdict.wrong { color: var(--red); }
+.cq-verdict-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 15px;
+  color: #FAF7F4;
+}
+.cq-verdict.right .cq-verdict-ic { background: #3E7C5A; }
+.cq-verdict.wrong .cq-verdict-ic { background: var(--red); }
+.cq-explain {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease, padding 0.4s ease;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.6;
+  background: #F4EFE9;
+  border-radius: 12px;
+  padding: 0 16px;
+}
+.cq-item.answered .cq-explain {
+  max-height: 240px;
+  opacity: 1;
+  margin-top: 14px;
+  padding: 14px 16px;
+}
+.cq-explain strong { color: var(--red); }
+.confetti-piece {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confettiFly 1.1s ease-out forwards;
+}
+@keyframes confettiFly {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx), calc(var(--dy) + 130px)) rotate(420deg) scale(0.7); opacity: 0; }
+}
+@media (max-width: 560px) {
+  .cq-options { gap: 8px; }
+  .cq-btn { padding: 14px 4px 12px; font-size: 14px; }
+}
+
+/* ── FINISH (аплодисменты) ── */
+.finish-cta { text-align: center; padding: 30px 0 10px; }
+.finish-reveal { display: none; text-align: center; }
+.finish-reveal.show { display: block; animation: finishFade 0.7s ease 0.4s both; }
+@keyframes finishFade {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.applause-emoji {
+  position: fixed;
+  top: -60px;
+  z-index: 9999;
+  pointer-events: none;
+  will-change: transform;
+  animation: applauseFall linear forwards;
+}
+@keyframes applauseFall {
+  0% { transform: translateY(-60px) rotate(-15deg); opacity: 0; }
+  10% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(106vh) rotate(35deg); opacity: 0; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" id="progressFill"></div>
+</div>
+
+<nav class="top-nav">
+  <div class="nav-left">
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Содержание">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-brand">Дарья Васильева</div>
+  </div>
+  <div class="nav-step" id="navStepLabel">Воркбук · Публичные выступления</div>
+</nav>
+
+<!-- ОГЛАВЛЕНИЕ -->
+<div class="toc-overlay" onclick="toggleMenu(false)"></div>
+<aside class="toc-drawer">
+  <div class="toc-head">
+    <div class="toc-title">Содержание</div>
+    <button class="toc-close" onclick="toggleMenu(false)" aria-label="Закрыть">&times;</button>
+  </div>
+  <nav class="toc-list">
+    <div class="toc-item" onclick="goToStep(0)"><span class="toc-num">•</span><span class="toc-name">Начало</span></div>
+    <div class="toc-item" onclick="goToStep(1)"><span class="toc-num">01</span><span class="toc-name">Природа страха</span></div>
+    <div class="toc-item" onclick="goToStep(2)"><span class="toc-num">02</span><span class="toc-name">Страх камеры</span></div>
+    <div class="toc-item" onclick="goToStep(3)"><span class="toc-num">03</span><span class="toc-name">Как работать со страхом</span></div>
+    <div class="toc-item" onclick="goToStep(4)"><span class="toc-num">04</span><span class="toc-name">Уровень тела</span></div>
+    <div class="toc-item" onclick="goToStep(5)"><span class="toc-num">05</span><span class="toc-name">Уровень эмоций</span></div>
+    <div class="toc-item" onclick="goToStep(6)"><span class="toc-num">06</span><span class="toc-name">Уровень мыслей</span></div>
+    <div class="toc-item" onclick="goToStep(7)"><span class="toc-num">07</span><span class="toc-name">Внутренний критик</span></div>
+    <div class="toc-item" onclick="goToStep(8)"><span class="toc-num">08</span><span class="toc-name">Круги внимания</span></div>
+    <div class="toc-item" onclick="goToStep(9)"><span class="toc-num">✓</span><span class="toc-name">Готово</span></div>
+  </nav>
+</aside>
+
+<div class="wrapper">
+
+  <!-- ═══ STEP 0 — ОБЛОЖКА ═══ -->
+  <div class="step active" id="step-0">
+
+    <div class="cover-title">Страх</div>
+    <div class="cover-subtitle">публичных выступлений</div>
+
+    <!-- wave -->
+    <div class="cover-divider">
+      <svg width="180" height="28" viewBox="0 0 180 28">
+        <line x1="4" y1="4" x2="4" y2="24" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="16" y1="9" x2="16" y2="19" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="28" y1="2" x2="28" y2="26" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="40" y1="7" x2="40" y2="21" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="52" y1="11" x2="52" y2="17" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="64" y1="4" x2="64" y2="24" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="76" y1="8" x2="76" y2="20" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="88" y1="2" x2="88" y2="26" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="100" y1="10" x2="100" y2="18" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="112" y1="5" x2="112" y2="23" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="124" y1="9" x2="124" y2="19" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="136" y1="3" x2="136" y2="25" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="148" y1="8" x2="148" y2="20" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="160" y1="11" x2="160" y2="17" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="172" y1="5" x2="172" y2="23" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <img class="photo-real photo-cover-img" src="https://i.ibb.co/PSvhNNT/image-01.jpg" alt="Дарья Васильева">
+
+    <div class="cover-desc">
+      Здесь нет правильных или неправильных ответов. В этом воркбуке только вы и честный разговор с собой о том, что происходит, когда вы проявляетесь на публике. Ответы видны только вам. 🔒
+    </div>
+
+    <div class="cover-disclaimer">
+      Воркбук предназначен для личного пользования участников курсов Дарьи Васильевой. Пожалуйста, не передавайте его третьим лицам.
+    </div>
+
+    <div class="cover-cta">
+      <button class="btn-start" onclick="goNext()">Начать</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 1 — ПРИРОДА СТРАХА ═══ -->
+  <div class="step" id="step-1">
+    <div class="step-eyebrow">
+      <div class="step-num">01</div>
+      <svg class="step-wave" height="16" viewBox="0 0 300 16" preserveAspectRatio="none">
+        <line x1="0" y1="6" x2="0" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="10" y1="3" x2="10" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="20" y1="1" x2="20" y2="15" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="4" x2="30" y2="12" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="40" y1="6" x2="40" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="50" y1="2" x2="50" y2="14" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="60" y1="5" x2="60" y2="11" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="70" y1="3" x2="70" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="step-title">Природа страха</div>
+
+    <div class="thesis">
+      <p>Самый глубокий страх для человека<span class="em-dash"> — </span>отвержение сообществом.</p>
+    </div>
+
+    <!-- ИЛЛЮСТРАЦИЯ К БЛОКУ -->
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/sd6N34WV/image-02.jpg" alt="Страх отвержения сообществом">
+    </div>
+
+    <div class="theory">
+      <p>В первобытные времена изгнание из племени означало смерть: человек не мог выжить в одиночестве в дикой природе. Этот эволюционный скрипт сохранился в нашей психике до сих пор.</p>
+      <p>Когда мы выходим перед аудиторией, мозг воспринимает это как угрозу, даже если реальной опасности нет. Мы боимся опозориться, хотим быть хорошими, боимся, что нас «изгонят».</p>
+    </div>
+
+    <div class="highlight">
+      <p>Сегодня это иррационально: даже если публика вас «отвергнет», вы выживете, но тело реагирует так, словно это угроза жизни.</p>
+    </div>
+
+    <div class="research-card">
+      <div class="research-card-head">
+        <div class="research-card-badge">🧠</div>
+        <div class="research-card-titles">
+          <div class="research-card-name">Что в мозге</div>
+          <div class="research-card-meta">Айзенбергер, Либерман, Уильямс · Science, 2003</div>
+        </div>
+      </div>
+      <div class="card-img">
+        <img src="https://i.ibb.co/xq7H3LLs/image-03.jpg" alt="Дорсальная передняя поясная кора и передняя островковая доля">
+      </div>
+      <div class="research-card-body">
+        <p>За переживание отвержения отвечает <strong>дорсальная передняя поясная кора</strong> и <strong>передняя островковая доля</strong> — те же зоны, которые обрабатывают физическую боль. Для мозга «меня отвергли» и «мне больно» — почти одно и то же.</p>
+        <p>Поэтому социальное отвержение ощущается буквально как боль: это древняя система тревоги, которая когда-то удерживала нас в племени, ведь в одиночку человек не выживал.</p>
+      </div>
+    </div>
+
+    <div class="definition">
+      <div class="definition-term">Глоссофобия</div>
+      <div class="card-img">
+        <img src="https://i.ibb.co/HW5JDtW/image-04.jpg" alt="Человек в толпе">
+      </div>
+      <p>Слово пришло из греческого: γλῶσσα (glossa) — «язык, речь» и φόβος (phobos) — «страх». Дословно — «страх говорить». Глоссофобия — это разновидность социальной тревожности. Главная психологическая причина — страх негативной оценки и, как следствие, отвержение сообществом. Это один из самых распространённых страхов, более частый, чем страх смерти, пауков или высоты.</p>
+      <p style="margin-top:1.5em">Со временем глоссофобия может перерасти в избегающее поведение: человек старается любой ценой избежать ситуации выступления, чтобы не испытывать стресс.</p>
+    </div>
+
+    <!-- VICIOUS CYCLE (картинка) -->
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/1f4TZmgV/image-05.jpg" alt="Порочный круг глоссофобии">
+    </div>
+
+    <div class="thesis thesis-conclusion">
+      <p>Чем сильнее мы боимся выдать страх, тем заметнее становятся симптомы, и тем сильнее мы боимся. Круг сам себя раскручивает.</p>
+    </div>
+
+    <div class="theory">
+      <p>Хорошая новость в том, что такой страх прекрасно прорабатывается в группе. Когда вы видите, что рядом такие же люди со своими «я боюсь», страх перестаёт казаться чем-то уникальным.</p>
+    </div>
+
+    <div class="theory">
+      
+    </div>
+
+    <!-- ИЛЛЮСТРАЦИЯ К БЛОКУ -->
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/nNTwBjPm/image-06.jpg" alt="Работа в группе">
+    </div>
+
+    <div class="research-card">
+      <div class="research-card-head">
+        <div class="research-card-badge">🔬</div>
+        <div class="research-card-titles">
+          <div class="research-card-name">Исследование</div>
+          <div class="research-card-meta">Ирвин Ялом — универсализация как фактор групповой терапии, 1970</div>
+        </div>
+      </div>
+      <div class="research-card-body">
+        <p><strong>Что изучали:</strong> какие факторы делают групповую терапию целительной, что именно помогает людям, когда они работают над проблемой не в одиночку, а в группе.</p>
+        <p><strong>Что нашли:</strong> когда человек понимает, что его страх, стыд или уязвимость разделяют другие, тревога снижается, исчезает ощущение собственной неполноценности. Это не со мной что-то не так — это нормальная человеческая реакция.</p>
+        <p><strong>Что это значит:</strong> когда вы видите, что другой человек тоже боится, но всё равно выходит и делает, страх перестаёт казаться тем, что должно вас останавливать. Это живое доказательство. Бояться и действовать можно одновременно. Такой опыт невозможно получить в одиночестве.</p>
+      </div>
+    </div>
+    <div class="research-source">
+      <svg class="research-source-icon" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#7A7572" stroke-width="1.3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#7A7572" stroke-width="1.3"/></svg>
+      <div class="research-source-text"><strong>Yalom, I. D.</strong> <em>The Theory and Practice of Group Psychotherapy</em>. Basic Books, 1970 (актуальное издание — в соавторстве с Leszcz M., 6-е изд., 2020). Глава о лечебных факторах группы, включая универсализацию.</div>
+    </div>
+
+    <div class="warning">
+      <div class="warning-label">Дисклеймер</div>
+      <p>Страх публичных выступлений постепенно отступает по мере того, как вы всё больше практикуетесь.</p>
+      <p>Но важно понимать: если ваш страх связан с сильной травматичной ситуацией из прошлого, возможно, вам нужно обратиться к психологу, иначе вы можете попасть в процесс ретравматизации, а не освобождения.</p>
+      <p>Прислушайтесь к себе: если страх сильный и за ним стоит старая боль, то это сигнал, чтобы обратиться за поддержкой к специалисту, работающему в направлении когнитивно-поведенческой терапии (КПТ)<sup>*</sup>.</p>
+      <p class="footnote" style="font-size:14px;color:var(--sub);margin-top:8px;padding-top:8px;border-top:1px solid var(--line);"><sup>*</sup> <strong>КПТ (когнитивно-поведенческая терапия)</strong> — метод психологической коррекции, нацеленный на изменение негативных мыслей и реакций. Считается одним из самых эффективных подходов для работы с социальными страхами. В процессе человек учится заменять катастрофические мысли («я опозорюсь, все будут смеяться») на более реалистичные и спокойные («аудитория доброжелательна, у меня есть знания, чтобы выступить хорошо»).</p>
+    </div>
+
+    <!-- IMPACT SCALE (финал блока) -->
+    <div class="impact-scale">
+      <div class="impact-q">Насколько страх говорить публично влияет на вашу жизнь прямо сейчас?</div>
+      <div class="slider-wrap">
+        <input type="range" min="0" max="10" value="5" class="impact-range" id="impactRange" oninput="updateImpact(this.value)">
+        <div class="slider-labels">
+          <span>Почти не влияет</span>
+          <span>Влияет очень сильно</span>
+        </div>
+      </div>
+      <div class="impact-feedback" id="impactFeedback"></div>
+    </div>
+
+    <div class="nav-bottom">
+      <button class="btn-nav btn-prev" onclick="goPrev()">← Назад</button>
+      <span class="step-counter">1 / 8</span>
+      <button class="btn-nav btn-next" onclick="goNext()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 2 — СТРАХ КАМЕРЫ ═══ -->
+  <div class="step" id="step-2">
+    <div class="step-eyebrow">
+      <div class="step-num">02</div>
+      <svg class="step-wave" height="16" viewBox="0 0 300 16" preserveAspectRatio="none">
+        <line x1="0" y1="6" x2="0" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="10" y1="3" x2="10" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="20" y1="1" x2="20" y2="15" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="4" x2="30" y2="12" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="40" y1="6" x2="40" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="50" y1="2" x2="50" y2="14" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="60" y1="5" x2="60" y2="11" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="70" y1="3" x2="70" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="step-title">Страх камеры</div>
+
+    <div class="theory">
+      <p>Эволюционно нам не была дана возможность видеть своё отражение. Мы тысячи лет не знали, как выглядим со стороны, поэтому видеть и слышать себя на записи до сих пор непривычно и странно.</p>
+    </div>
+
+    <!-- ИЛЛЮСТРАЦИЯ: Нарцисс -->
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/r2dRm3wK/image-07.jpg" alt="Нарцисс смотрит на своё отражение в воде">
+    </div>
+
+    <div class="theory">
+      <p>Вспомните миф о Нарциссе — юноше, который впервые увидел своё отражение в воде и не смог от него оторваться. Он любовался собой, пока не угас на берегу. Этот миф родился не случайно: возможность разглядывать себя была для человека чем-то новым и почти магическим.</p>
+    </div>
+
+    <div class="factbox">
+      <div class="factbox-label">Историческая справка</div>
+      <div class="factbox-items">
+        <div class="factbox-item">
+          <div class="factbox-year">XVI век</div>
+          <div class="factbox-text">появились плоские зеркала, в которые можно ясно себя рассмотреть</div>
+        </div>
+        <div class="factbox-item">
+          <div class="factbox-year">1835</div>
+          <div class="factbox-text">зеркало стало доступно обычным людям — изобрели дешёвое серебряное покрытие</div>
+        </div>
+        <div class="factbox-item">
+          <div class="factbox-year">1877</div>
+          <div class="factbox-text">человек впервые услышал свой записанный голос — фонограф Эдисона</div>
+        </div>
+        <div class="factbox-item">
+          <div class="factbox-year">1895</div>
+          <div class="factbox-text">человек впервые увидел себя в движении на видео — первый кинематограф</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <p>В масштабах всей истории человечества возможность видеть и слышать себя со стороны появилась буквально «вчера».</p>
+    </div>
+
+    <div class="theory">
+      <p>Нам это до сих пор непривычно, поэтому мы часто не нравимся себе на видео, и собственный голос в записи кажется чужим. Дело ещё и в том, что мы привыкли к себе в зеркале: подходя к нему, мы за доли секунды меняем лицо микродвижениями, чуть поправляем мимику и создаём то отражение, которое нам больше нравится.</p>
+    </div>
+
+    <!-- ИЛЛЮСТРАЦИЯ: зеркало vs запись -->
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/8nRXcwqs/image-08.jpg" alt="Слева — недовольный взгляд, на записи — мягче и теплее">
+    </div>
+
+    <div class="highlight">
+      <p>Камера, особенно когда мы себя в этот момент не видим, показывает нас просто такими, какими нас видят люди со стороны.</p>
+    </div>
+
+    <div class="flip-intro">Нажмите на карточку, чтобы перевернуть</div>
+    <div class="flip-grid">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front"><span>«Мой голос на записи звучит ужасно»</span></div>
+          <div class="flip-back"><span>Вы слышите его редко, поэтому он кажется вам чужим, хотя все остальные слышат вас именно так.</span></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front"><span>«На видео я выгляжу не так, как в зеркале»</span></div>
+          <div class="flip-back"><span>В зеркале вы видите немного другую версию себя, так как вы уже привыкли делать определённое выражение лица и микромимикой. А видео показывает нас такими, какими нас видят люди в реальности.</span></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front"><span>«Раз мне некомфортно, значит я плохо выгляжу»</span></div>
+          <div class="flip-back"><span>Дискомфорт — это про непривычность, а не про внешность. Он уходит с практикой, а не с изменением лица.</span></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front"><span>«Камера ловит каждый мой промах»</span></div>
+          <div class="flip-back"><span>Зритель смотрит на смысл и на вас целиком, а не выискивает огрехи. Их замечаете только вы.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <p>И ещё одна причина страха: камера — это тоже публичное выступление. За маленькой чёрной точкой объектива стоит множество людей: подписчики, незнакомцы, все, кто может увидеть вас в интернете.</p>
+      <p>При этом, у камеры нет обратной связи: когда мы говорим живому человеку, мозг непрерывно считывает его мимику, кивки, реакции. Камера не даёт этих сигналов, и мозг воспринимает неопределённость как угрозу, заполняя пробел худшим сценарием: «наверное, это выглядит ужасно».</p>
+    </div>
+
+    <div class="research-card">
+      <div class="research-card-head">
+        <div class="research-card-badge">🔬</div>
+        <div class="research-card-titles">
+          <div class="research-card-name">Исследование</div>
+          <div class="research-card-meta">Мита, Дермер и Найт, Journal of Personality and Social Psychology, 1977</div>
+        </div>
+      </div>
+      <div class="research-card-body">
+        <p><strong>Что изучали:</strong> какой свой образ человек предпочитает: обычное фото или зеркальное отражение, и почему.</p>
+        <p><strong>Что нашли:</strong> люди предпочитают зеркальное отражение своего лица фотографическому, тогда как их близкие предпочитают наоборот. Мы единственные в мире, для кого привычная версия нашего лица — зеркальная.</p>
+        <p><strong>Что это значит:</strong> дискомфорт при просмотре себя на видео — нормальная реакция, а не признак того, что вы «плохо выглядите». Это просто непривычно.</p>
+      </div>
+    </div>
+    <div class="research-source">
+      <svg class="research-source-icon" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#7A7572" stroke-width="1.3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#7A7572" stroke-width="1.3"/></svg>
+      <div class="research-source-text"><strong>Mita, T. H., Dermer, M., Knight, J.</strong> «Reversed Facial Images and the Mere-Exposure Hypothesis». <em>Journal of Personality and Social Psychology</em>, 35(8), 1977, с. 597–601. DOI: <a href="https://doi.org/10.1037/0022-3514.35.8.597" target="_blank">10.1037/0022-3514.35.8.597</a></div>
+    </div>
+
+    <div class="highlight">
+      <p><strong>Как преодолевается страх камеры:</strong> только постоянной, регулярной практикой записи. Чем больше вы видите себя на видео, тем более привычным и нейтральным становится это изображение, а страх постепенно теряет силу.</p>
+    </div>
+
+    <!-- ИНТЕРАКТИВ: ползунок страха камеры -->
+    <div class="impact-scale">
+      <div class="impact-q">Насколько у вас присутствует страх камеры прямо сейчас?</div>
+      <div class="slider-wrap">
+        <input type="range" min="0" max="10" value="5" class="impact-range" id="cameraRange" oninput="updateCameraImpact(this.value)">
+        <div class="slider-labels">
+          <span>Почти нет</span>
+          <span>Очень сильный</span>
+        </div>
+      </div>
+      <div class="impact-feedback" id="cameraFeedback"></div>
+    </div>
+
+    <div class="nav-bottom">
+      <button class="btn-nav btn-prev" onclick="goPrev()">← Назад</button>
+      <span class="step-counter">2 / 8</span>
+      <button class="btn-nav btn-next" onclick="goNext()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 3 — ВОЛНЕНИЕ ═══ -->
+  <div class="step" id="step-3">
+    <div class="step-eyebrow">
+      <div class="step-num">03</div>
+      <svg class="step-wave" height="16" viewBox="0 0 300 16" preserveAspectRatio="none">
+        <line x1="0" y1="6" x2="0" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="10" y1="3" x2="10" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="20" y1="1" x2="20" y2="15" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="4" x2="30" y2="12" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="40" y1="6" x2="40" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="50" y1="2" x2="50" y2="14" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="60" y1="5" x2="60" y2="11" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="70" y1="3" x2="70" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="step-title">Как работать со страхом</div>
+
+    <div class="theory">
+      <p>Первое, что важно сделать, — определить уровень своего волнения. От этого зависит, нужно ли вообще с ним что-то делать.</p>
+    </div>
+
+    <div class="choose-intro">Как волнение может влиять на ваши действия?</div>
+    <div class="choose-cards">
+      <div class="choose-card" onclick="this.classList.toggle('opened')">
+        <div class="choose-card-head">
+          <span class="choose-card-title">Волнение, которое <strong>не корректирует</strong> ваши действия</span>
+          <span class="choose-card-arrow">▾</span>
+        </div>
+        <div class="choose-card-body">
+          <p>Вы немного волнуетесь, но делаете всё, что планировали: говорите то, что хотели, тем же голосом, держитесь так, как задумали.</p>
+          <p>Это даже приятно: лёгкий адреналин, чувство, что ты живой. Такое волнение не враг, им можно просто наслаждаться, а воркбук поможет узнать себя глубже.</p>
+        </div>
+      </div>
+
+      <div class="choose-card" onclick="this.classList.toggle('opened')">
+        <div class="choose-card-head">
+          <span class="choose-card-title">Волнение, которое <strong>корректирует</strong> ваши действия</span>
+          <span class="choose-card-arrow">▾</span>
+        </div>
+        <div class="choose-card-body">
+          <p>Появляются заметные симптомы, и вы ведёте себя не так, как хотели: говорите не то, сбиваетесь, зажимаетесь.</p>
+          <p>Вот тогда с волнением стоит поработать, и дальше в воркбуке мы будем заниматься именно этим.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ИЛЛЮСТРАЦИЯ: три уровня страха -->
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/jZTptDnn/3811-FBF9-471-F-4354-AEED-97-A84-C64-B749.png" alt="Три уровня страха: тело, эмоции, мысли">
+    </div>
+
+    <div class="levels">
+      <div class="levels-title">Страх публичных выступлений может проявляться на трёх уровнях</div>
+      <div class="levels-grid">
+        <div class="level-card">
+          <div class="level-icon">
+            <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="11" r="6" stroke="#8B2E2E" stroke-width="2.2"/><path d="M11 34c0-6 4-10 9-10s9 4 9 10" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="level-name">Тело</div>
+          <div class="level-desc">Телесные симптомы: то, что происходит физически — дыхание, зажимы и пр.</div>
+        </div>
+        <div class="level-card">
+          <div class="level-icon">
+            <svg viewBox="0 0 40 40" fill="none"><path d="M20 32C12 26 6 21 6 14.5 6 10 9.5 7 13.5 7c2.6 0 4.9 1.3 6.5 3.4C21.6 8.3 23.9 7 26.5 7 30.5 7 34 10 34 14.5 34 21 28 26 20 32z" stroke="#8B2E2E" stroke-width="2.2" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="level-name">Эмоции</div>
+          <div class="level-desc">То, что мы переживаем внутри: стыд, тревога и пр.</div>
+        </div>
+        <div class="level-card">
+          <div class="level-icon">
+            <svg viewBox="0 0 40 40" fill="none"><path d="M14 30c-4-1-8-5-8-11C6 12 12 7 20 7s14 5 14 12c0 7-6 12-14 12-1.4 0-2.7-.1-4-.4L11 33l3-3z" stroke="#8B2E2E" stroke-width="2.2" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="level-name">Мысли</div>
+          <div class="level-desc">То, что мы себе говорим: голос внутреннего критика, катастрофические сценарии и пр.</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="research-card">
+      <div class="research-card-head">
+        <div class="research-card-badge">🔬</div>
+        <div class="research-card-titles">
+          <div class="research-card-name">Постепенные и регулярные выступления</div>
+          <div class="research-card-meta">Mayo-Wilson и коллеги · сетевой мета-анализ методов лечения социальной тревожности · Lancet Psychiatry, 2014</div>
+        </div>
+      </div>
+      <div class="research-card-body">
+        <p>Уверенность — следствие повторений, а не врождённой смелости. Метод экспозиции, то есть постепенное привыкание к пугающей ситуации, — один из самых изученных подходов в работе со страхами.</p>
+        <p>Большой сетевой мета-анализ психологических методов лечения социальной тревожности показал, что наибольшую эффективность дают когнитивно-поведенческая терапия и экспозиция. Поэтому регулярная практика выступлений работает: каждый выход постепенно снижает тревогу.</p>
+        <p class="footnote" style="font-size:14px;color:var(--sub);margin-top:8px;padding-top:8px;border-top:1px solid var(--line);">Источник: Mayo-Wilson E. et al. Psychological and pharmacological interventions for social anxiety disorder in adults: a systematic review and network meta-analysis. <em>The Lancet Psychiatry</em>, 2014; 1(5): 368–376. <a href="https://pubmed.ncbi.nlm.nih.gov/26361000/" target="_blank">pubmed.ncbi.nlm.nih.gov/26361000</a></p>
+      </div>
+    </div>
+
+    <div class="impact-scale">
+      <div class="impact-q">Насколько на вас влияет волнение, которое вы испытываете перед выступлением или записью?</div>
+      <div class="slider-wrap">
+        <input type="range" min="0" max="10" value="5" class="impact-range" id="worryRange" oninput="updateWorry(this.value)">
+        <div class="slider-labels">
+          <span>Не мешает мне</span>
+          <span>Сбивает меня</span>
+        </div>
+      </div>
+      <div class="impact-feedback" id="worryFeedback"></div>
+    </div>
+
+    <div class="nav-bottom">
+      <button class="btn-nav btn-prev" onclick="goPrev()">← Назад</button>
+      <span class="step-counter">3 / 8</span>
+      <button class="btn-nav btn-next" onclick="goNext()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 5 — ЧТО ПРОИСХОДИТ С ТЕЛОМ ═══ -->
+  <div class="step" id="step-4">
+    <div class="step-eyebrow">
+      <div class="step-num">04</div>
+      <svg class="step-wave" height="16" viewBox="0 0 300 16" preserveAspectRatio="none">
+        <line x1="0" y1="6" x2="0" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="10" y1="3" x2="10" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="20" y1="1" x2="20" y2="15" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="4" x2="30" y2="12" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="40" y1="6" x2="40" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="50" y1="2" x2="50" y2="14" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="60" y1="5" x2="60" y2="11" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="70" y1="3" x2="70" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="step-title">Уровень тела</div>
+
+    <div class="theory">
+      <p>Страх публичных выступлений запускает реакцию «бей или беги». Мозг активирует стрессовую ось: гипоталамус → гипофиз → надпочечники. В кровь выбрасываются адреналин и кортизол.</p>
+      <p>Организм готовится к «опасности»: сердце гонит кровь к мышцам, тело охлаждается через пот, дыхание учащается для притока кислорода. С эволюционной точки зрения выступление перед публикой похоже на ситуацию, когда на вас смотрит стадо хищников.</p>
+    </div>
+
+    <!-- ИЛЛЮСТРАЦИЯ К БЛОКУ -->
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/PvBkyw1v/F7-FEB1-FF-CE82-4-DC1-B7-F6-0-B2-DEF9-C2-C4-E.png" alt="Тело реагирует на волнение">
+    </div>
+
+    <!-- CHECKLIST: узнаёте у себя -->
+    <div class="checklist" id="symptoms">
+      <div class="checklist-q">Отметьте то, что узнаёте у себя перед выступлением:</div>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Сердце колотится</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Пересыхает во рту</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Трясутся руки</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Бросает в жар, потливость</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Теряю мысль</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Ком в горле</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Ноги ватные</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Голос дрожит</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Дышу часто и неглубоко</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Напряжение в мышцах</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Тошнота</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Головокружение</span></label>
+      <label class="check-item"><input type="checkbox" onchange="updateChecklist('symptoms')"><span class="check-box"></span><span class="check-label">Частые позывы к мочеиспусканию</span></label>
+      <div class="checklist-note" id="symptoms-note">Сколько бы вы ни отметили — это нормальная реакция тела, а не ваша поломка. С каждым из этих симптомов мы будем работать дальше.</div>
+    </div>
+
+    <div class="warning">
+      <div class="warning-label">Важно</div>
+      <p>Если телесных симптомов слишком много и они становятся неуправляемыми — это сигнал обратиться к специалисту. Тело — это последний этап волнения: его запускают мысли и эмоции, и когда реакция слишком сильная, в одиночку с ней не всегда справиться.</p>
+    </div>
+
+    <div class="theory">
+      <p>Чтобы убрать телесные симптомы, нужно работать с тем, что их запускает: эмоциями и мыслями. Об этом мы подробно поговорим в следующих блоках.</p>
+      <p>Но кое-что можно делать уже сейчас — давать своему мозгу сигнал через тело. Если вы стоите и держитесь уверенно, мозг считывает это и понемногу успокаивается. Это работает «от обратного»: не «я спокоен — значит, держусь ровно», а «я держусь ровно — значит, можно успокоиться».</p>
+    </div>
+
+    <div class="posture">
+      <div class="posture-title">Поза, которая успокаивает</div>
+      <div class="posture-grid">
+        <div class="posture-card">
+          <div class="posture-icon">
+            <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="11" r="5" stroke="#8B2E2E" stroke-width="2.4"/><path d="M24 17v15" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/><path d="M16 22h16" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/><path d="M24 32l-6 10M24 32l6 10" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/><path d="M13 43h22" stroke="#8FAFC2" stroke-width="2.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="posture-name">Устойчивая позиция</div>
+          <div class="posture-desc">Обе стопы на полу, вес распределён равномерно.</div>
+        </div>
+        <div class="posture-card">
+          <div class="posture-icon">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 6v36" stroke="#8FAFC2" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="2 4"/><circle cx="24" cy="12" r="4.5" stroke="#8B2E2E" stroke-width="2.4"/><path d="M24 17v13" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/><path d="M15 21h18" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/><path d="M24 30l-5 11M24 30l5 11" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="posture-name">Ровная вертикаль</div>
+          <div class="posture-desc">Спина прямая, макушка тянется вверх, плечи расправлены.</div>
+        </div>
+        <div class="posture-card">
+          <div class="posture-icon">
+            <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="12" r="4.5" stroke="#8B2E2E" stroke-width="2.4"/><path d="M24 17v13" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/><path d="M11 23h26" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/><path d="M24 30l-6 11M24 30l6 11" stroke="#8B2E2E" stroke-width="2.4" stroke-linecap="round"/><path d="M7 18a18 18 0 0 0 0 16M41 18a18 18 0 0 1 0 16" stroke="#8FAFC2" stroke-width="2.2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="posture-name">Достаточный объём</div>
+          <div class="posture-desc">Вы не сжимаетесь, а спокойно занимаете своё пространство.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/BHQ6bHZ8/37174-B36-82-BF-4-A94-9751-2-D55-D4839811.png" alt="Устойчивая поза">
+    </div>
+
+    <div class="highlight">
+      <p>Работа с телом и позой снижает тревогу и повышает активность в зонах мозга, отвечающих за контроль эмоций и движение. Это помогает перенаправить волнение в энергию выступления.</p>
+    </div>
+
+    <div class="practice-intro">
+      <div class="practice-intro-title">Что помогает прямо сейчас</div>
+      <p>Несколько телесных практик, которые быстро снижают напряжение. Нажмите на любую, чтобы раскрыть описание.</p>
+    </div>
+
+    <div class="practice-list">
+      <div class="practice-card" onclick="this.classList.toggle('opened')">
+        <div class="practice-head">
+          <span class="practice-name">Контакт с телом</span>
+          <span class="practice-arrow">▾</span>
+        </div>
+        <div class="practice-body">
+          <p>Потрогайте себя за плечи, обнимите ладонями предплечья, почувствуйте стопы на полу. Почувствуйте опору: на чём вы сидите, куда опираетесь спиной. Не забывайте, что вы — своя самая первая опора и можете поддержать себя собственным телом в любой ситуации. Простое самоприкосновение запускает рецепторы кожи, активирует парасимпатическую нервную систему и выделение окситоцина — уровень кортизола снижается, и тело успокаивается.</p>
+        </div>
+      </div>
+
+      <div class="practice-card" onclick="this.classList.toggle('opened')">
+        <div class="practice-head">
+          <span class="practice-name">Периферийное зрение</span>
+          <span class="practice-arrow">▾</span>
+        </div>
+        <div class="practice-body">
+          <p>Не фокусируйтесь на одной точке — мягко расширьте взгляд, охватывая пространство по краям. Узкое, «туннельное» зрение мозг связывает с угрозой и держит симпатическую систему включённой (выброс норадреналина). Широкое, панорамное зрение запускает обратный процесс: активируется парасимпатическая система, и общий уровень возбуждения падает.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="gate" id="bodyGate">
+      <div class="gate-q">Интересно поработать с уровнем эмоций и мыслей?</div>
+      <div class="gate-levels">
+        <div class="gate-level done">
+          <div class="gate-level-ic"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="11" r="6" stroke="#8B2E2E" stroke-width="2.2"/><path d="M11 34c0-6 4-10 9-10s9 4 9 10" stroke="#8B2E2E" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+          <span class="gate-level-name">Тело</span>
+          <span class="gate-level-badge">
+            <span class="gate-check"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#8B2E2E"/><path d="M6 10.5l2.5 2.5L14 7.5" stroke="#FAF7F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </span>
+        </div>
+        <div class="gate-level locked">
+          <div class="gate-level-ic"><svg viewBox="0 0 40 40" fill="none"><path d="M20 32C12 26 6 21 6 14.5 6 10 9.5 7 13.5 7c2.6 0 4.9 1.3 6.5 3.4C21.6 8.3 23.9 7 26.5 7 30.5 7 34 10 34 14.5 34 21 28 26 20 32z" stroke="#8B2E2E" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+          <span class="gate-level-name">Эмоции</span>
+          <span class="gate-level-badge">
+            <span class="gate-lock"><svg viewBox="0 0 20 20" fill="none"><rect x="4.5" y="9" width="11" height="8" rx="2" stroke="#B8B0A8" stroke-width="1.6"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9" stroke="#B8B0A8" stroke-width="1.6"/></svg></span>
+            <span class="gate-check"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#8B2E2E"/><path d="M6 10.5l2.5 2.5L14 7.5" stroke="#FAF7F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </span>
+        </div>
+        <div class="gate-level locked">
+          <div class="gate-level-ic"><svg viewBox="0 0 40 40" fill="none"><path d="M14 30c-4-1-8-5-8-11C6 12 12 7 20 7s14 5 14 12c0 7-6 12-14 12-1.4 0-2.7-.1-4-.4L11 33l3-3z" stroke="#8B2E2E" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+          <span class="gate-level-name">Мысли</span>
+          <span class="gate-level-badge">
+            <span class="gate-lock"><svg viewBox="0 0 20 20" fill="none"><rect x="4.5" y="9" width="11" height="8" rx="2" stroke="#B8B0A8" stroke-width="1.6"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9" stroke="#B8B0A8" stroke-width="1.6"/></svg></span>
+            <span class="gate-check"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#8B2E2E"/><path d="M6 10.5l2.5 2.5L14 7.5" stroke="#FAF7F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </span>
+        </div>
+      </div>
+      <button class="gate-btn" type="button" onclick="answerGate('bodyGate')">Открыть уровни</button>
+      <div class="gate-answer">Уровни открыты — нажимайте «Далее».</div>
+    </div>
+
+    <div class="nav-bottom">
+      <button class="btn-nav btn-prev" onclick="goPrev()">← Назад</button>
+      <span class="step-counter">4 / 8</span>
+      <button class="btn-nav btn-next" onclick="goNext()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 6 — СТЫД ═══ -->
+  <div class="step" id="step-5">
+    <div class="step-eyebrow">
+      <div class="step-num">05</div>
+      <svg class="step-wave" height="16" viewBox="0 0 300 16" preserveAspectRatio="none">
+        <line x1="0" y1="6" x2="0" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="10" y1="3" x2="10" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="20" y1="1" x2="20" y2="15" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="4" x2="30" y2="12" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="40" y1="6" x2="40" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="50" y1="2" x2="50" y2="14" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="60" y1="5" x2="60" y2="11" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="70" y1="3" x2="70" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="step-title">Уровень эмоций</div>
+
+    <div class="theory">
+      <p>На уровне эмоций со страхом публичных выступлений связаны две эмоции: страх и стыд.</p>
+      <p>Стыд — это функция социальной регуляции: он управляет нашим поведением в обществе. Когда мы испытываем стыд, психика считывает это как сигнал, что мы нарушаем некие общественные правила, а значит, рискуем быть отвергнутыми. Так стыд рождает тот самый древний страх изгнания из сообщества.</p>
+    </div>
+
+    <div class="theory">
+      <p>Стыд — одно из самых сложно переносимых чувств для человека. Он заставляет сжиматься, прятаться, замолкать. Именно поэтому нежелание выходить на сцену, включать камеру, высказывать своё мнение чаще всего связано именно со стыдом.</p>
+    </div>
+
+    <!-- ИЛЛЮСТРАЦИЯ К БЛОКУ -->
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/4nk05QQN/46-E22-E5-F-D06-E-43-FE-B7-CB-8391-EFE87-EC0.png" alt="Стыд">
+    </div>
+
+    <div class="research-card">
+      <div class="research-card-head">
+        <div class="research-card-badge">🔬</div>
+        <div class="research-card-titles">
+          <div class="research-card-name">Исследование</div>
+          <div class="research-card-meta">Брене Браун — два десятилетия изучения стыда и уязвимости</div>
+        </div>
+      </div>
+      <div class="research-card-body">
+        <p><strong>Что изучали:</strong> природу стыда и уязвимости на основе тысяч интервью (что заставляет людей чувствовать себя «недостаточно хорошими» и что помогает это преодолеть).</p>
+        <p><strong>Что нашли:</strong> стыд живёт в темноте и молчании, и именно там растёт. Люди, которые умеют справляться со стыдом, не избегают его, а проходят через три шага: назвать его, вынести на свет и не оставаться с ним в одиночестве.</p>
+        <p><strong>Ключевой вывод:</strong> разница между теми, кто «застрял» в стыде, и теми, кто с ним справился, не в отсутствии стыда, а в готовности назвать его вслух. Когда стыд назван и вынесен на свет, он теряет власть.</p>
+      </div>
+    </div>
+    <div class="research-source">
+      <svg class="research-source-icon" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#7A7572" stroke-width="1.3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#7A7572" stroke-width="1.3"/></svg>
+      <div class="research-source-text"><strong>Brown, B.</strong> <em>Daring Greatly: How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent, and Lead</em>. Gotham Books, 2012. Подробнее об исследовании: <a href="https://brenebrown.com/research/" target="_blank">brenebrown.com/research</a></div>
+    </div>
+
+    <div class="quote-block quote-bubble">
+      <div class="quote-text">Это не значит, что стыд исчезнет. Это значит, что ты становишься больше него.</div>
+      <div class="quote-source">Брене Браун</div>
+    </div>
+
+    <!-- PRACTICE ZONE -->
+    <div class="practice-zone">
+      <div class="practice-q">Чего вы стыдитесь? Опишите, что ужасного, как вам кажется, может произойти во время публичного выступления или когда вы начнёте записывать видео.</div>
+      <textarea class="field" placeholder="Опишите здесь..."></textarea>
+      <div class="practice-q" style="margin-top:12px;">Что бы вы сказали близкому другу, если бы он поделился с вами такими переживаниями?</div>
+      <textarea class="field" placeholder="Напишите ему (себе)..."></textarea>
+    </div>
+
+    <div class="practice-intro">
+      <div class="practice-intro-title">Что делать прямо сейчас?</div>
+      <p>Вот несколько практик, которые помогают справиться с эмоциями. Нажмите на любую, чтобы раскрыть описание.</p>
+    </div>
+
+    <div class="practice-list">
+      <div class="practice-card" onclick="this.classList.toggle('opened')">
+        <div class="practice-head">
+          <span class="practice-name">Дыхание «Квадрат»</span>
+          <span class="practice-arrow">▾</span>
+        </div>
+        <div class="practice-body">
+          <p>Вдох на 4 счёта — задержка на 4 — выдох на 4 — задержка на 4. Повторите 3–4 раза. Длинный выдох и паузы стимулируют блуждающий нерв и включают парасимпатическую нервную систему: пульс замедляется, уровень кортизола снижается, а тело получает сигнал, что можно успокоиться.</p>
+        </div>
+      </div>
+
+      <div class="practice-card" onclick="this.classList.toggle('opened')">
+        <div class="practice-head">
+          <span class="practice-name">Короткий вдох, длинный выдох</span>
+          <span class="practice-arrow">▾</span>
+        </div>
+        <div class="practice-body">
+          <p>Короткий вдох носом и длинный, медленный выдох ртом — несколько циклов. Длинный выдох активирует парасимпатическую нервную систему, которая отвечает за успокоение.</p>
+        </div>
+      </div>
+
+      <div class="practice-card" onclick="this.classList.toggle('opened')">
+        <div class="practice-head">
+          <span class="practice-name">Образ эмоции</span>
+          <span class="practice-arrow">▾</span>
+        </div>
+        <div class="practice-body">
+          <p>Представьте свою эмоцию как образ: какого она цвета, какого размера, где она в теле. А теперь почувствуйте, что вы намного больше неё. Эмоция — лишь маленькая часть внутри вас, а вы — то большое, что её вмещает.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-bottom">
+      <button class="btn-nav btn-prev" onclick="goPrev()">← Назад</button>
+      <span class="step-counter">5 / 8</span>
+      <button class="btn-nav btn-next" onclick="goNext()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 7 — УРОВЕНЬ МЫСЛЕЙ ═══ -->
+  <div class="step" id="step-6">
+    <div class="step-eyebrow">
+      <div class="step-num">06</div>
+      <svg class="step-wave" height="16" viewBox="0 0 300 16" preserveAspectRatio="none">
+        <line x1="0" y1="6" x2="0" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="10" y1="3" x2="10" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="20" y1="1" x2="20" y2="15" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="4" x2="30" y2="12" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="40" y1="6" x2="40" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="50" y1="2" x2="50" y2="14" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="60" y1="5" x2="60" y2="11" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="70" y1="3" x2="70" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="step-title">Уровень мыслей</div>
+
+    <div class="theory">
+      <p>Третий уровень страха — мысли. Именно здесь рождаются катастрофические сценарии: «я опозорюсь», «все увидят, что я волнуюсь», «я скажу глупость». Мысль запускает тело и эмоции, а не наоборот.</p>
+    </div>
+
+    <!-- ИНТЕРАКТИВ: о чём думаю (перенесён из Аудитории) -->
+    <div class="practice-zone">
+      <div class="practice-q">Когда вы выступаете, о чём думаете чаще всего? Что занимает вашу голову?</div>
+      <div class="choice-group">
+        <button class="choice-btn" onclick="toggleChoice(this)">Как я выгляжу</button>
+        <button class="choice-btn" onclick="toggleChoice(this)">Что обо мне подумают</button>
+        <button class="choice-btn" onclick="toggleChoice(this)">Не забыть что сказать</button>
+        <button class="choice-btn" onclick="toggleChoice(this)">Что я делаю с руками</button>
+        <button class="choice-btn" onclick="toggleChoice(this)">Хочу побыстрее закончить</button>
+        <button class="choice-btn" onclick="toggleChoice(this)">Что хочу донести</button>
+      </div>
+      <input type="text" class="field" style="margin-top:12px;" placeholder="Свой вариант...">
+    </div>
+
+    <div class="research-card">
+      <div class="research-card-head">
+        <div class="research-card-badge">🔬</div>
+        <div class="research-card-titles">
+          <div class="research-card-name">Исследование</div>
+          <div class="research-card-meta">Элисон Вуд Брукс, Гарвард, 2014</div>
+        </div>
+      </div>
+      <div class="research-card-body">
+        <p><strong>Что изучали:</strong> участникам перед публичным выступлением предлагали либо сказать себе «я спокоен», либо «я взволнован» — и сравнивали, как это влияет на качество выступления.</p>
+        <p><strong>Что нашли:</strong> те, кто говорил «я взволнован» (то есть переосмыслял тревогу как азарт и возможность, а не как угрозу), выступали значительно лучше и воспринимались наблюдателями как более убедительные, чем те, кто пытался себя успокоить.</p>
+        <p><strong>Что это значит:</strong> бороться с волнением и заставлять себя «успокоиться» — проигрышная стратегия. Тот же телесный подъём можно переименовать в азарт: «я не боюсь — я завёлся». И тогда он начинает работать на вас.</p>
+      </div>
+    </div>
+    <div class="research-source">
+      <svg class="research-source-icon" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#7A7572" stroke-width="1.3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#7A7572" stroke-width="1.3"/></svg>
+      <div class="research-source-text"><strong>Brooks, A. W.</strong> «Get Excited: Reappraising Pre-Performance Anxiety as Excitement». <em>Journal of Experimental Psychology: General</em>, 143(3), 2014, с. 1144–1158. DOI: <a href="https://doi.org/10.1037/a0035325" target="_blank">10.1037/a0035325</a></div>
+    </div>
+
+    <div class="research-card">
+      <div class="research-card-head">
+        <div class="research-card-badge">🔬</div>
+        <div class="research-card-titles">
+          <div class="research-card-name">Исследование</div>
+          <div class="research-card-meta">Эффект прожектора — Гилович, Медвек, Савицкий, 2000</div>
+        </div>
+      </div>
+      <div class="research-card-body">
+        <p><strong>Что изучали:</strong> насколько точно люди оценивают, сколько внимания окружающие уделяют их ошибкам и внешнему виду.</p>
+        <p><strong>Что нашли:</strong> люди систематически переоценивают, насколько их замечают. Участники были уверены, что все заметили их неловкость, а наблюдатели её почти не зафиксировали.</p>
+        <p><strong>Что это значит:</strong> дрожащий голос, оговорка, пауза остаются незамеченными чаще, чем кажется. Аудитория занята собой куда больше, чем вами.</p>
+      </div>
+    </div>
+    <div class="research-source">
+      <svg class="research-source-icon" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#7A7572" stroke-width="1.3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#7A7572" stroke-width="1.3"/></svg>
+      <div class="research-source-text"><strong>Gilovich, T., Medvec, V. H., Savitsky, K.</strong> «The Spotlight Effect in Social Judgment». <em>Journal of Personality and Social Psychology</em>, 78(2), 2000, с. 211–222. DOI: <a href="https://doi.org/10.1037/0022-3514.78.2.211" target="_blank">10.1037//0022-3514.78.2.211</a></div>
+    </div>
+
+    <div class="highlight">
+      <p><strong>Тщательная подготовка.</strong> Значительная часть волнения связана с плохой подготовкой. Репетиции, знание материала и заранее продуманная структура речи существенно повышают уверенность. Этот метод вы будете использовать во время подготовки речей.</p>
+    </div>
+
+    <div class="practice-list">
+      <div class="practice-card" onclick="this.classList.toggle('opened')">
+        <div class="practice-head">
+          <span class="practice-name">Техника «И что?»</span>
+          <span class="practice-arrow">▾</span>
+        </div>
+        <div class="practice-body">
+          <p>Доведите тревожную мысль до конца, спрашивая себя «И что?» на каждом шаге:</p>
+          <p>«А вдруг я скажу не то?» — «И что?» — «Меня осудят» — «И что?» — и так далее, пока не дойдёте до самого дна. Обычно там оказывается, что ничего непоправимого не происходит, и страх теряет силу.</p>
+          <p>Это упражнение хорошо делать письменно — или попросить близкого человека, чтобы он раз за разом задавал вам этот вопрос.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- УПРАЖНЕНИЕ: Декатастрофизация -->
+    <div class="exercise" id="decatastro">
+      <div class="exercise-head" onclick="this.parentNode.classList.toggle('opened')">
+        <div class="exercise-titles">
+          <div class="exercise-label">Упражнение</div>
+          <div class="exercise-name">Декатастрофизация</div>
+        </div>
+        <span class="exercise-arrow">▾</span>
+      </div>
+      <div class="exercise-body">
+        <p class="exercise-intro">Хорошо делать накануне выступления, письменно — или вместе с близким человеком, который будет задавать вам эти вопросы. Подходит при любом страхе.</p>
+
+        <div class="ex-step">
+          <div class="ex-num">1</div>
+          <div class="ex-content">
+            <div class="ex-q">Определите самый страшный сценарий. Опишите самый страшный исход из всех возможных.</div>
+            <textarea class="field" placeholder="Напишите здесь..."></textarea>
+            <div class="ex-rate">Оцените свою тревогу от 1 до 10:</div>
+            <input type="range" min="1" max="10" value="5" class="impact-range ex-slider">
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-num">2</div>
+          <div class="ex-content">
+            <div class="ex-q">Оцените вероятность. На сколько процентов вы уверены, что это случится? Почему вы так уверены? Осознайте, что цифра может быть завышена под влиянием эмоций.</div>
+            <textarea class="field" placeholder="Напишите здесь..."></textarea>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-num">3</div>
+          <div class="ex-content">
+            <div class="ex-q">Исследуйте доказательства. На чём основаны ваши опасения? Есть ли реальные доказательства того, что это произойдёт?</div>
+            <textarea class="field" placeholder="Напишите здесь..."></textarea>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-num">4</div>
+          <div class="ex-content">
+            <div class="ex-q">План действий. Представьте, что самый ужасный сценарий всё-таки реализовался. Что вы могли бы сделать? Пропишите конкретные шаги, которые помогут справиться с последствиями.</div>
+            <textarea class="field" placeholder="Напишите здесь..."></textarea>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-num">5</div>
+          <div class="ex-content">
+            <div class="ex-q">Найдите альтернативные сценарии. Придумайте несколько альтернативных исходов — менее драматичных, но возможных. Запишите их и представьте, как справитесь с каждым.</div>
+            <textarea class="field" placeholder="Напишите здесь..."></textarea>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-num">6</div>
+          <div class="ex-content">
+            <div class="ex-q">Оценка последствий для жизни. Спросите себя: «Если самое страшное случится, как это реально повлияет на мою жизнь через неделю, месяц, год?» Это помогает увидеть, что даже худший сценарий, скорее всего, не будет иметь долговременных последствий.</div>
+            <textarea class="field" placeholder="Напишите здесь..."></textarea>
+            <div class="ex-rate">Теперь снова оцените свою тревогу от 1 до 10:</div>
+            <input type="range" min="1" max="10" value="5" class="impact-range ex-slider">
+          </div>
+        </div>
+
+        <div class="ex-ps">Я обожаю это упражнение, потому что оно быстрое и реально помогает уменьшить тревогу.</div>
+      </div>
+    </div>
+
+    <div class="nav-bottom">
+      <button class="btn-nav btn-prev" onclick="goPrev()">← Назад</button>
+      <span class="step-counter">6 / 8</span>
+      <button class="btn-nav btn-next" onclick="goNext()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 8 — ВНУТРЕННИЙ КРИТИК ═══ -->
+  <div class="step" id="step-7">
+    <div class="step-eyebrow">
+      <div class="step-num">07</div>
+      <svg class="step-wave" height="16" viewBox="0 0 300 16" preserveAspectRatio="none">
+        <line x1="0" y1="6" x2="0" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="10" y1="3" x2="10" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="20" y1="1" x2="20" y2="15" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="4" x2="30" y2="12" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="40" y1="6" x2="40" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="50" y1="2" x2="50" y2="14" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="60" y1="5" x2="60" y2="11" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="70" y1="3" x2="70" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="step-title">Внутренний критик</div>
+
+    <div class="theory">
+      <p>Эрик Бёрн описал три эго-состояния личности, которые определяют, как мы думаем, чувствуем и действуем в любой ситуации.</p>
+    </div>
+
+    <!-- ИЛЛЮСТРАЦИЯ К БЛОКУ -->
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/vvjR8QgR/A81-D74-FA-D37-B-4-F4-B-B36-F-1-B6-CAF35-FC0-E.png" alt="Внутренний критик">
+    </div>
+
+    <div class="research-source" style="margin-top:-12px;">
+      <svg class="research-source-icon" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#7A7572" stroke-width="1.3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#7A7572" stroke-width="1.3"/></svg>
+      <div class="research-source-text"><strong>Berne, E.</strong> <em>Transactional Analysis in Psychotherapy: A Systematic Individual and Social Psychiatry</em>. Grove Press, 1961. Модель трёх эго-состояний (Родитель–Взрослый–Ребёнок) — основа транзактного анализа, признанного терапевтического направления.</div>
+    </div>
+
+    <div class="ego-grid">
+      <div class="ego-card">
+        <div class="ego-card-title">Ребёнок</div>
+        <div class="ego-card-body">Эмоциональная, спонтанная часть. Здесь живут настоящие желания, чувства, мечты. Именно она хочет проявляться и творить.</div>
+      </div>
+      <div class="ego-card accent">
+        <div class="ego-card-title">Родитель</div>
+        <div class="ego-card-body">Голоса усвоенных авторитетов. Бывает двух видов: <strong style="color:var(--red);">критикующий</strong> — оценивает и осуждает, и <strong style="color:var(--red);">поддерживающий</strong> — говорит «у тебя всё получится».</div>
+      </div>
+      <div class="ego-card">
+        <div class="ego-card-title">Взрослый</div>
+        <div class="ego-card-body">Рациональная, объективная часть. Обрабатывает информацию и принимает решения исходя из реальности.</div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <p>Мы боимся публичных выступлений не потому, что нас осудят другие люди. Чаще всего мы боимся собственного внутреннего голоса критикующего Родителя: «Я опять опозорился», «Ну что это было».</p>
+    </div>
+
+    <div class="theory">
+      <p>Цель не в том, чтобы заглушить критика. Цель — вырастить поддерживающего Родителя настолько, чтобы он умел вовремя сказать критику: «Секундочку, погоди, сейчас нужно просто сделать».</p>
+      <p>А рядом с ними работает третья фигура — Взрослый. Пока критик нападает, а поддерживающий Родитель отвечает, Взрослый сверяет тревогу с реальностью: насколько вероятно то, чего я боюсь, есть ли доказательства.</p>
+      <p class="key-footnote">Эту позицию вы уже тренировали: техники «И что?» и «Декатастрофизация» из блока про мысли как раз взращивают вашего Взрослого.</p>
+    </div>
+
+    <div class="key-thought">Критик никуда не денется, но решать, чей голос громче, можете вы.</div>
+
+    <div class="voice-game">
+      <div class="voice-stimulus-wrap"><div class="voice-stimulus">«Плохо выступил»</div></div>
+      <div class="voice-hint">направление мысли</div>
+      <svg class="voice-fork" viewBox="0 0 200 100">
+        <defs>
+          <marker id="vArrow" markerWidth="9" markerHeight="9" refX="3" refY="4.5" orient="auto">
+            <path d="M1 1.5 L5 4.5 L1 7.5" fill="none" stroke="#8B2E2E" stroke-width="1.4" opacity="0.65" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <path d="M100 6 V34"/>
+        <path d="M100 34 L70 90" marker-end="url(#vArrow)"/>
+        <path d="M100 34 L130 90" marker-end="url(#vArrow)"/>
+      </svg>
+      <div class="voice-branches">
+        <div class="voice-branch critic" onclick="this.classList.toggle('opened')">
+          <div class="voice-branch-head">
+            <span class="voice-branch-label">«Я плохой»</span>
+            <span class="voice-branch-plus"></span>
+          </div>
+          <div class="voice-branch-body">
+            <div class="voice-tag voice-tag-critic">Голос внутреннего критика</div>
+            <p>Один промах превращается в приговор всей личности. Был факт — «выступил не так, как хотел», а стал ярлык на всего себя.</p>
+          </div>
+        </div>
+        <div class="voice-branch adult" onclick="this.classList.toggle('opened')">
+          <div class="voice-branch-head">
+            <span class="voice-branch-label">«Не хватило подготовки»</span>
+            <span class="voice-branch-plus"></span>
+          </div>
+          <div class="voice-branch-body">
+            <div class="voice-tag voice-tag-adult">Голос Взрослого и поддерживающего Родителя</div>
+            <p>Не было времени, не успел подготовиться — конкретная причина, а не клеймо. И при этом было ещё много хорошего. Такой голос видит реальность целиком и оставляет место, чтобы стать лучше. А ещё, как самый добрый друг, поддержит тебя в любой ситуации.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRACTICE ZONE -->
+    <div class="practice-zone">
+      <div class="practice-q">Что говорит ваш внутренний критик после неудачного выступления? Напишите его фразу — дословно, как он звучит внутри.</div>
+      <input type="text" class="field" placeholder="«...»">
+      <div class="practice-q" style="margin-top:12px;">А что мог бы сказать поддерживающий Родитель в ответ? Придумайте его реплику.</div>
+      <input type="text" class="field" placeholder="«...»">
+    </div>
+
+    <div class="nav-bottom">
+      <button class="btn-nav btn-prev" onclick="goPrev()">← Назад</button>
+      <span class="step-counter">7 / 8</span>
+      <button class="btn-nav btn-next" onclick="goNext()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 9 — КРУГИ ВНИМАНИЯ ═══ -->
+  <div class="step" id="step-8">
+    <div class="step-eyebrow">
+      <div class="step-num">08</div>
+      <svg class="step-wave" height="16" viewBox="0 0 300 16" preserveAspectRatio="none">
+        <line x1="0" y1="6" x2="0" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="10" y1="3" x2="10" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="20" y1="1" x2="20" y2="15" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="4" x2="30" y2="12" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="40" y1="6" x2="40" y2="10" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="50" y1="2" x2="50" y2="14" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="60" y1="5" x2="60" y2="11" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="70" y1="3" x2="70" y2="13" stroke="#E2DFDC" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="step-title">Круги внимания</div>
+
+    <!-- ИЛЛЮСТРАЦИЯ: девушка в кругах внимания -->
+    <div class="photo-filled photo-inline">
+      <img src="https://i.ibb.co/V07JTq3B/image-12.jpg" alt="Девушка в кругах внимания">
+    </div>
+
+    <div class="quote-block">
+      <div class="quote-text" style="font-style:italic;">Представьте: актёр выходит на сцену и думает только о том, как он выглядит. Его внимание утекает к зрителям — к их взглядам, к оценке. Сыграет ли он хорошо?</div>
+    </div>
+
+    <div class="theory">
+      <p>Вряд ли. Именно это заметил Константин Станиславский, когда создавал свою актёрскую систему: как только внимание актёра уходит в зал, игра теряет жизнь. И предложил решение — круги внимания. Смысл в том, чтобы дать вниманию ясный объект и сознательно управлять его шириной.</p>
+    </div>
+
+    <!-- Circles visualization -->
+    <div class="circles-viz-wrap">
+      <div class="circles-viz">
+        <div class="circle-ring circle-large"></div>
+        <div class="circle-ring circle-medium"></div>
+        <div class="circle-ring circle-small">
+          <span>Я</span>
+        </div>
+        <div class="circle-label-large">Большой</div>
+        <div class="circle-label-medium">Средний</div>
+      </div>
+    </div>
+
+    <div class="circle-defs">
+      <div class="circle-def">
+        <div class="circle-def-name">Малый круг</div>
+        <div class="circle-def-text">Сам человек и то, что рядом: партнёр, предмет в руках, собственное дыхание.</div>
+      </div>
+      <div class="circle-def">
+        <div class="circle-def-name">Средний круг</div>
+        <div class="circle-def-text">Часть пространства: группа людей, участок сцены, зал.</div>
+      </div>
+      <div class="circle-def">
+        <div class="circle-def-name">Большой круг</div>
+        <div class="circle-def-text">Всё вокруг — вплоть до дальних стен и за их пределами.</div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <p>Актёр учится сжимать и расширять этот круг по своей воле — и перестаёт играть «на публику».</p>
+    </div>
+
+    <div class="highlight">
+      <p><strong>Публичное одиночество.</strong> Так Станиславский называл это умение: вы на глазах у всех, но сосредоточены на своём деле, а не на оценке толпы. Внимание перестаёт метаться, а присутствие остаётся живым.</p>
+    </div>
+
+    <div class="apply-title">Как применять в выступлениях</div>
+    <div class="apply-list">
+      <div class="apply-item">
+        <div class="apply-num">1</div>
+        <div class="apply-text">Сбивает аудитория — уйдите в <strong>малый круг</strong>: к себе, к дыханию, к заметкам.</div>
+      </div>
+      <div class="apply-item">
+        <div class="apply-num">2</div>
+        <div class="apply-text">Захлёстывает собственное волнение — расширьтесь до <strong>среднего</strong>: лица, пространство зала.</div>
+      </div>
+      <div class="apply-item">
+        <div class="apply-num">3</div>
+        <div class="apply-text">Теряете ощущение реальности — выйдите в <strong>большой круг</strong>: за пределы помещения.</div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <p>У внимания снова есть объект — и страх теряет опору.</p>
+    </div>
+
+    <div class="research-card">
+      <div class="research-card-head">
+        <div class="research-card-badge">🔬</div>
+        <div class="research-card-titles">
+          <div class="research-card-name">Исследование</div>
+          <div class="research-card-meta">Кларк и Уэллс, 1995 — когнитивная модель социальной тревожности</div>
+        </div>
+      </div>
+      <div class="research-card-body">
+        <p><strong>Что изучали:</strong> как устроена социальная тревожность изнутри — почему человек, боящийся оценки, концентрируется на себе и своих ощущениях вместо реального контакта с аудиторией.</p>
+        <p><strong>Что нашли:</strong> ключевой фактор — самофокусировка внимания. Когда человек думает о том, как он выглядит, это усиливает доступ к негативным мыслям и буквально мешает выступлению. Получается замкнутый круг: думаю о себе → выступаю хуже → убеждаюсь, что мои страхи оправданы.</p>
+        <p><strong>Что это значит:</strong> переключение внимания с себя на внешние стимулы — аудиторию, пространство, содержание — это не психологический трюк, а работающий механизм, подтверждённый клинически.</p>
+      </div>
+    </div>
+    <div class="research-source">
+      <svg class="research-source-icon" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#7A7572" stroke-width="1.3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#7A7572" stroke-width="1.3"/></svg>
+      <div class="research-source-text"><strong>Clark, D. M., Wells, A.</strong> «A Cognitive Model of Social Phobia». В кн.: Heimberg R. G., Liebowitz M., Hope D. A., Schneier F. R. (ред.) <em>Social Phobia: Diagnosis, Assessment and Treatment</em>. Guilford Press, 1995, с. 69–93. Обзор модели: <a href="https://www.psychologytools.com/resource/cognitive-behavioral-model-of-social-phobia-clark-wells-1995" target="_blank">psychologytools.com</a></div>
+    </div>
+
+    <div class="research-card">
+      <div class="research-card-head">
+        <div class="research-card-badge">🔬</div>
+        <div class="research-card-titles">
+          <div class="research-card-name">Исследование</div>
+          <div class="research-card-meta">Университет Регенсбурга, Wechsler et al., Frontiers in Psychiatry, 2021</div>
+        </div>
+      </div>
+      <div class="research-card-body">
+        <p><strong>Что изучали:</strong> эффективность разных техник работы со страхом публичных выступлений.</p>
+        <p><strong>Что нашли:</strong> тревога и страх оценки значительно снижались, причём уже в процессе самой практики переключения внимания, а не после долгой терапии.</p>
+        <p><strong>Вывод:</strong> практика с кругами внимания — это не упражнение «для расслабления», а инструмент с доказанной эффективностью.</p>
+      </div>
+    </div>
+    <div class="research-source">
+      <svg class="research-source-icon" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#7A7572" stroke-width="1.3"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#7A7572" stroke-width="1.3"/></svg>
+      <div class="research-source-text"><strong>Wechsler, T. F., Pfaller, M., van Eickels, R. E., Schulz, L. H., Mühlberger, A.</strong> «Look at the Audience? A Randomized Controlled Study of Shifting Attention From Self-Focus to Nonsocial vs. Social External Stimuli During Virtual Reality Exposure to Public Speaking in Social Anxiety». <em>Frontiers in Psychiatry</em>, 12, 2021, ст. 751272. DOI: <a href="https://doi.org/10.3389/fpsyt.2021.751272" target="_blank">10.3389/fpsyt.2021.751272</a></div>
+    </div>
+
+    <!-- PRACTICE ZONE -->
+    <div class="practice-zone">
+      <div class="practice-q">В каком круге вы чаще всего находитесь во время выступления?</div>
+      <div class="choice-group">
+        <button class="choice-btn" onclick="toggleChoice(this)">В малом — ухожу в себя</button>
+        <button class="choice-btn" onclick="toggleChoice(this)">В среднем — замечаю аудиторию</button>
+        <button class="choice-btn" onclick="toggleChoice(this)">Большой — мыслями где-то далеко</button>
+        <button class="choice-btn" onclick="toggleChoice(this)">Мечусь между всеми</button>
+      </div>
+      <div class="practice-q" style="margin-top:12px;">В каком круге вам было бы комфортнее всего? Почему?</div>
+      <textarea class="field" placeholder="Напишите..."></textarea>
+    </div>
+
+    <!-- ТЕСТ НА ЗАКРЕПЛЕНИЕ -->
+    <div class="quiz-section">
+      <div class="quiz-badge">✦ Тест</div>
+      <div class="cq-title">Какой круг поможет?</div>
+      <div class="cq-intro">Прочитайте ситуацию и выберите круг внимания, который выручит. Нажмите на вариант.</div>
+
+      <div class="cq-item">
+        <div class="cq-step">Вопрос 1</div>
+        <div class="cq-question">Вы смотрите в зал, замечаете скучающие и недовольные лица — и начинаете сбиваться.</div>
+        <div class="cq-options">
+          <button class="cq-btn" data-val="small" onclick="answerCircle(this,'small')"><span class="cq-ring small"><span></span></span>Малый</button>
+          <button class="cq-btn" data-val="medium" onclick="answerCircle(this,'small')"><span class="cq-ring medium"><span></span></span>Средний</button>
+          <button class="cq-btn" data-val="large" onclick="answerCircle(this,'small')"><span class="cq-ring large"><span></span></span>Большой</button>
+        </div>
+        <div class="cq-verdict"></div>
+        <div class="cq-explain"><strong>Малый круг.</strong> Когда сбивает аудитория, уйдите к себе — к дыханию, к заметкам, к своей мысли. Лица зала перестают вас вести.</div>
+      </div>
+
+      <div class="cq-item">
+        <div class="cq-step">Вопрос 2</div>
+        <div class="cq-question">Вас захлёстывает собственное волнение: сердце колотится, мысли разбегаются, вы зациклены на себе.</div>
+        <div class="cq-options">
+          <button class="cq-btn" data-val="small" onclick="answerCircle(this,'medium')"><span class="cq-ring small"><span></span></span>Малый</button>
+          <button class="cq-btn" data-val="medium" onclick="answerCircle(this,'medium')"><span class="cq-ring medium"><span></span></span>Средний</button>
+          <button class="cq-btn" data-val="large" onclick="answerCircle(this,'medium')"><span class="cq-ring large"><span></span></span>Большой</button>
+        </div>
+        <div class="cq-verdict"></div>
+        <div class="cq-explain"><strong>Средний круг.</strong> Когда захлёстывает своё волнение, расширьтесь — перенесите внимание на зал, на лица, на пространство. Выход из зацикленности на себе снижает тревогу.</div>
+      </div>
+
+      <div class="cq-item">
+        <div class="cq-step">Вопрос 3</div>
+        <div class="cq-question">Вы чувствуете, что «проваливаетесь»: теряете ощущение реальности и того, что вообще происходит.</div>
+        <div class="cq-options">
+          <button class="cq-btn" data-val="small" onclick="answerCircle(this,'large')"><span class="cq-ring small"><span></span></span>Малый</button>
+          <button class="cq-btn" data-val="medium" onclick="answerCircle(this,'large')"><span class="cq-ring medium"><span></span></span>Средний</button>
+          <button class="cq-btn" data-val="large" onclick="answerCircle(this,'large')"><span class="cq-ring large"><span></span></span>Большой</button>
+        </div>
+        <div class="cq-verdict"></div>
+        <div class="cq-explain"><strong>Большой круг.</strong> Когда теряете контакт с реальностью, выйдите за пределы помещения вниманием — это возвращает ощущение происходящего и заземляет.</div>
+      </div>
+    </div>
+
+    <div class="nav-bottom">
+      <button class="btn-nav btn-prev" onclick="goPrev()">← Назад</button>
+      <span class="step-counter">8 / 8</span>
+      <button class="btn-nav btn-next" onclick="goNext()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 9 — ФИНАЛ ═══ -->
+  <div class="step" id="step-9">
+    <div class="finish-photo">
+      <img src="https://i.ibb.co/XkFC1DRG/IMG-2782.jpg" alt="Дарья Васильева" style="width:100%;height:auto;display:block;border-radius:14px;">
+    </div>
+
+    <div class="finish-cta" id="finishCta">
+      <button class="btn-start" onclick="finishWorkbook()">Нажмите, чтобы завершить воркбук</button>
+    </div>
+
+    <div class="finish-reveal" id="finishReveal">
+      <div style="margin-bottom:30px;">
+        <svg width="160" height="24" viewBox="0 0 160 24">
+          <line x1="3" y1="10" x2="3" y2="14" stroke="#8B2E2E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="11" y1="6" x2="11" y2="18" stroke="#8B2E2E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="19" y1="2" x2="19" y2="22" stroke="#8B2E2E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="27" y1="6" x2="27" y2="18" stroke="#8B2E2E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="35" y1="8" x2="35" y2="16" stroke="#8B2E2E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="43" y1="1" x2="43" y2="23" stroke="#8B2E2E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="51" y1="5" x2="51" y2="19" stroke="#8B2E2E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="59" y1="3" x2="59" y2="21" stroke="#8B2E2E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="67" y1="8" x2="67" y2="16" stroke="#8B2E2E" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="75" y1="2" x2="75" y2="22" stroke="#8B2E2E" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="finish-title">Это только начало</div>
+      <div class="finish-sub">
+        Вы сделали ещё один шаг навстречу себе — к спокойствию и уверенности в любой ситуации, в том числе перед публикой и камерой.<br><br>
+        А дальше всё решает практика. Чем чаще вы выходите выступать и записывать себя, тем крепче ваш навык уверенности.
+      </div>
+
+      <div class="finish-sig">Дарья Васильева</div>
+    </div>
+
+    <div class="nav-bottom">
+      <button class="btn-nav btn-prev" onclick="goPrev()">← Назад</button>
+      <span class="step-counter"></span>
+      <button class="btn-nav btn-next" onclick="scrollTo(0,0)" style="background:var(--dark);">В начало</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function markFamiliar(id) {
+  document.getElementById(id).classList.toggle('is-marked');
+}
+function answerGate(id) {
+  document.getElementById(id).classList.add('answered');
+}
+function updateChecklist(id) {
+  const box = document.getElementById(id);
+  const any = box.querySelectorAll('input[type=checkbox]:checked').length > 0;
+  box.classList.toggle('is-revealed', any);
+}
+function updateImpact(val) {
+  const fb = document.getElementById('impactFeedback');
+  if (!fb) return;
+  const v = parseInt(val, 10);
+  if (v >= 6) {
+    fb.innerHTML = '<strong>Ничего страшного.</strong> Вы не одиноки — этот страх есть у многих, и мы будем работать с ним дальше, шаг за шагом.';
+  } else if (v <= 4) {
+    fb.innerHTML = '<strong>Отличные новости!</strong> У вас уже есть устойчивость к этому стрессу. Двигайтесь дальше по воркбуку, чтобы ещё лучше понять себя.';
+  } else {
+    fb.innerHTML = 'Где-то посередине — это нормально. Продолжайте, дальше мы разберём страх по частям.';
+  }
+  fb.classList.add('show');
+}
+function updateWorry(val) {
+  const fb = document.getElementById('worryFeedback');
+  if (!fb) return;
+  const v = parseInt(val, 10);
+  if (v <= 4) {
+    fb.innerHTML = '<strong>Отлично!</strong> Ваше волнение вам не мешает, можете спокойно наслаждаться этим адреналином, а воркбук поможет узнать себя ещё глубже.';
+  } else if (v >= 6) {
+    fb.innerHTML = '<strong>Тогда нам есть с чем поработать.</strong> Дальше мы разберём страх по трём уровням: тело, эмоции, мысли, и научимся возвращать себе управление своим состоянием.';
+  } else {
+    fb.innerHTML = 'Иногда мешает, иногда нет — обычная история. Дальше разберём, как поддержать себя именно в те моменты, когда волнение сбивает.';
+  }
+  fb.classList.add('show');
+}
+function updateCameraImpact(val) {
+  const fb = document.getElementById('cameraFeedback');
+  if (!fb) return;
+  const v = parseInt(val, 10);
+  if (v >= 6) {
+    fb.innerHTML = '<strong>Это нормально.</strong> Камера пугает почти всех поначалу, и именно она лучше всего приручается практикой. Чем чаще вы записываете себя, тем спокойнее становится.';
+  } else if (v <= 4) {
+    fb.innerHTML = '<strong>Здорово!</strong> Вы уже довольно свободно чувствуете себя на камере — это большое преимущество. Дальше будем только укреплять это ощущение.';
+  } else {
+    fb.innerHTML = 'Где-то посередине — обычная история. С каждым новым видео изображение себя становится привычнее и нейтральнее.';
+  }
+  fb.classList.add('show');
+}
+const TOTAL = 10; // 0..11
+let current = 0;
+
+function updateUI() {
+  document.querySelectorAll('.step').forEach((s, i) => {
+    s.classList.toggle('active', i === current);
+  });
+  const pct = current === 0 ? 0 : Math.round((current / (TOTAL - 1)) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  const label = current === 0 ? 'Воркбук · Публичные выступления'
+              : current === TOTAL - 1 ? 'Готово'
+              : 'Блок ' + current + ' из ' + (TOTAL - 2);
+  document.getElementById('navStepLabel').textContent = label;
+  document.querySelectorAll('.toc-item').forEach((it, i) => {
+    it.classList.toggle('active', i === current);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleMenu(force) {
+  const open = typeof force === 'boolean' ? force : !document.body.classList.contains('menu-open');
+  document.body.classList.toggle('menu-open', open);
+}
+function goToStep(n) {
+  current = n;
+  updateUI();
+  toggleMenu(false);
+}
+
+function answerCircle(btn, correct) {
+  const item = btn.closest('.cq-item');
+  if (item.classList.contains('answered')) return;
+  item.classList.add('answered');
+  const isRight = btn.dataset.val === correct;
+  item.querySelectorAll('.cq-btn').forEach(b => {
+    if (b.dataset.val === correct) b.classList.add('correct');
+    else if (b === btn) b.classList.add('wrong');
+  });
+  const verdict = item.querySelector('.cq-verdict');
+  if (isRight) {
+    verdict.innerHTML = '<span class="cq-verdict-ic">✓</span> Правильно!';
+    verdict.className = 'cq-verdict right';
+    celebrate(btn);
+  } else {
+    verdict.innerHTML = '<span class="cq-verdict-ic">✕</span> Неправильно — верный ответ выделен зелёным';
+    verdict.className = 'cq-verdict wrong';
+  }
+}
+
+function finishWorkbook() {
+  document.getElementById('finishCta').style.display = 'none';
+  document.getElementById('finishReveal').classList.add('show');
+  applause();
+}
+function applause() {
+  for (let i = 0; i < 44; i++) {
+    const e = document.createElement('div');
+    e.className = 'applause-emoji';
+    e.textContent = '👏';
+    e.style.left = Math.random() * 100 + 'vw';
+    e.style.fontSize = (22 + Math.random() * 24) + 'px';
+    e.style.animationDuration = (2 + Math.random() * 1.8) + 's';
+    e.style.animationDelay = (Math.random() * 0.9) + 's';
+    document.body.appendChild(e);
+    setTimeout(() => e.remove(), 4400);
+  }
+}
+
+function celebrate(originEl) {
+  const colors = ['#8B2E2E', '#3E7C5A', '#D9A441', '#4E7388', '#C97B7B'];
+  const rect = originEl.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = cx + 'px';
+    p.style.top = cy + 'px';
+    p.style.background = colors[i % colors.length];
+    const angle = Math.random() * 2 * Math.PI;
+    const dist = 60 + Math.random() * 100;
+    p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+    p.style.setProperty('--dy', (Math.sin(angle) * dist - 50) + 'px');
+    p.style.animationDelay = (Math.random() * 0.12) + 's';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 1400);
+  }
+}
+
+function goNext() {
+  if (current < TOTAL - 1) { current++; updateUI(); }
+}
+function goPrev() {
+  if (current > 0) { current--; updateUI(); }
+}
+
+function toggleChoice(btn) {
+  btn.classList.toggle('selected');
+}
+
+updateUI();
+</script>
+</body>
+</html>
